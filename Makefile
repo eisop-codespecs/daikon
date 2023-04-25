@@ -745,7 +745,7 @@ ifndef NONETWORK
 	if test -d utils/html-tools/.git ; then \
 	  (cd utils/html-tools && (git pull -q || (echo "git pull failed" && true))) \
 	elif ! test -d utils/html-tools ; then \
-	  (mkdir -p utils && (git clone -q --depth 1 https://github.com/eisop-plume-lib/html-tools.git utils/html-tools || git clone -q --depth 1 https://github.com/eisop-plume-lib/html-tools.git utils/html-tools)) \
+	  (mkdir -p utils && (git clone -q --depth 1 https://github.com/plume-lib/html-tools.git utils/html-tools || git clone -q --depth 1 https://github.com/plume-lib/html-tools.git utils/html-tools)) \
 	fi
 endif
 
