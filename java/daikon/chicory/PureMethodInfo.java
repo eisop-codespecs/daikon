@@ -181,8 +181,7 @@ public class PureMethodInfo extends DaikonVariableInfo {
     } else if (obj instanceof Byte) {
       return new Runtime.ByteWrap((Byte) obj);
     } else if (obj instanceof Character) {
-      @SuppressWarnings("signedness")
-      return new Runtime.CharWrap((Character) obj);
+      return @SuppressWarnings("signedness:cast.incomparable") new Runtime.CharWrap((Character) obj);
     } else if (obj instanceof Float) {
       return new Runtime.FloatWrap((Float) obj);
     } else if (obj instanceof Double) {
