@@ -2243,6 +2243,7 @@ The "defined(INT)" test ensures that it only appears once in the output.
 
         // Just one element; return a one-element array.
         // assert cls.equals(_TYPE_WRAPPER_NAME.TYPE);
+        @SuppressWarnings("signedness")
         return new _TYPE[] { GETVALUE(fieldObj) };
       }
     } else {
@@ -2345,7 +2346,7 @@ The "defined(INT)" test ensures that it only appears once in the output.
       }
 
     }
-
+    @SuppressWarnings("signedness")
     return GETVALUE(fieldObj);
 
   }
