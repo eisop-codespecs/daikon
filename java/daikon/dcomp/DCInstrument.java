@@ -1348,7 +1348,7 @@ public class DCInstrument extends InstructionListUtils {
     }
     for (int ii = plist.size() - 1; ii >= 0; ii--) {
       @SuppressWarnings(
-          "signedness:cast.incomparable") // offset is small so + '0' is valid character
+          "signedness:cast.incomparable") // offset is small so + '0' is a valid character
       char tmpChar = (char) (plist.get(ii) + '0');
       params += tmpChar;
       // Character.forDigit (plist.get(ii), Character.MAX_RADIX);
