@@ -2350,7 +2350,7 @@ The "defined(INT)" test ensures that it only appears once in the output.
 
     }
     #if defined(CHAR)
-      @SuppressWarnings("signedness:cast.incomparable")
+      @SuppressWarnings("signedness:cast.incomparable") // Suppress the warning as it is a Character
     #endif
     _TYPE_NAME tmp = GETVALUE(fieldObj);
     return tmp;
