@@ -2186,7 +2186,6 @@ The "defined(INT)" test ensures that it only appears once in the output.
     assert (fields != null);
     assert (fieldsStartIdx >= 0 && fieldsStartIdx < fields.length);
 
-    @SuppressWarnings("signedness:cast.incomparable")
     Object fieldObj;
     try {
       Field field = (object instanceof java.lang.Class<?>)
@@ -2244,7 +2243,11 @@ The "defined(INT)" test ensures that it only appears once in the output.
 
         // Just one element; return a one-element array.
         // assert cls.equals(_TYPE_WRAPPER_NAME.TYPE);
-        return new _TYPE[] { GETVALUE(fieldObj) };
+        #if defined(CHAR)
+          @SuppressWarnings("signedness:cast.incomparable")
+        #endif
+        _TYPE_NAME tmp = GETVALUE(fieldObj);
+        return new _TYPE[] {tmp};
       }
     } else {
       // recursive case: more fields to access after this one
@@ -2346,6 +2349,10 @@ The "defined(INT)" test ensures that it only appears once in the output.
       }
 
     }
-    return GETVALUE(fieldObj);
+    #if defined(CHAR)
+      @SuppressWarnings("signedness:cast.incomparable")
+    #endif
+    _TYPE_NAME tmp = GETVALUE(fieldObj);
+    return tmp;
 
   }
