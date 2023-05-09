@@ -760,7 +760,7 @@ public class InvariantAddAndCheckTester {
       // - The comparability will be none
       @SuppressWarnings({
         "interning",
-        "signedness:cast.unsafe" // `i` is small enough to prevent overflow
+        "signedness:cast.incomparable" // `i` is small enough to prevent overflow
       })
       @Interned VarInfo result =
           new VarInfo(
