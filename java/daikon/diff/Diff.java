@@ -118,11 +118,8 @@ public final class Diff {
       @Nullable @ClassGetName String invSortComparator2Classname,
       @Nullable @ClassGetName String invPairComparatorClassname,
       Comparator<Invariant> defaultComparator)
-      throws ClassNotFoundException,
-          IllegalAccessException,
-          InstantiationException,
-          InvocationTargetException,
-          NoSuchMethodException {
+      throws ClassNotFoundException, IllegalAccessException, InstantiationException,
+          InvocationTargetException, NoSuchMethodException {
     this.examineAllPpts = examineAllPpts;
     this.ignoreNumberedExits = ignoreNumberedExits;
     this.invSortComparator1 = selectComparator(invSortComparator1Classname, defaultComparator);
@@ -135,15 +132,9 @@ public final class Diff {
    * as necessary, and diff the InvMaps.
    */
   public static void main(String[] args)
-      throws FileNotFoundException,
-          StreamCorruptedException,
-          OptionalDataException,
-          IOException,
-          ClassNotFoundException,
-          IllegalAccessException,
-          InstantiationException,
-          InvocationTargetException,
-          NoSuchMethodException {
+      throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
+          ClassNotFoundException, IllegalAccessException, InstantiationException,
+          InvocationTargetException, NoSuchMethodException {
     try {
       mainHelper(args);
     } catch (Daikon.DaikonTerminationException e) {
@@ -156,15 +147,9 @@ public final class Diff {
    * appropriate to be called progrmmatically.
    */
   public static void mainHelper(final String[] args)
-      throws FileNotFoundException,
-          StreamCorruptedException,
-          OptionalDataException,
-          IOException,
-          ClassNotFoundException,
-          InstantiationException,
-          IllegalAccessException,
-          InvocationTargetException,
-          NoSuchMethodException {
+      throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
+          ClassNotFoundException, InstantiationException, IllegalAccessException,
+          InvocationTargetException, NoSuchMethodException {
     daikon.LogHelper.setupLogs(INFO);
 
     boolean printDiff = false;
@@ -699,11 +684,8 @@ public final class Diff {
    */
   private static Comparator<Invariant> selectComparator(
       @Nullable @ClassGetName String classname, Comparator<Invariant> defaultComparator)
-      throws ClassNotFoundException,
-          IllegalAccessException,
-          InstantiationException,
-          InvocationTargetException,
-          NoSuchMethodException {
+      throws ClassNotFoundException, IllegalAccessException, InstantiationException,
+          InvocationTargetException, NoSuchMethodException {
 
     if (classname != null) {
       Class<?> cls = Class.forName(classname);
