@@ -34,6 +34,7 @@ import java.io.UncheckedIOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.NumberFormat;
@@ -1367,7 +1368,7 @@ public final class FileIO {
         InputStreamReader chicReader = new InputStreamReader(chicoryInput, UTF_8);
         reader = new LineNumberReader(chicReader);
       } else if (is_url) {
-        URL url = new URL(raw_filename);
+        URL url = new URI(raw_filename).toURL();
         InputStream stream = null; // dummy initialization for compiler's definite assignment check
         try {
           stream = url.openStream();
