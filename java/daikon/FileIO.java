@@ -1374,7 +1374,6 @@ public final class FileIO {
         try {
           url = new URI(raw_filename).toURL();
         } catch (URISyntaxException | MalformedURLException e) {
-          throw new RuntimeException("Failed to convert URI to URL", e);
         }
         InputStream stream = null; // dummy initialization for compiler's definite assignment check
         try {
