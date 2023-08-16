@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.OptionalDataException;
 import java.io.PrintStream;
 import java.io.StreamCorruptedException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -97,7 +96,7 @@ public class InvariantChecker {
 
   public static void main(String[] args)
       throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
-          ClassNotFoundException, URISyntaxException {
+          ClassNotFoundException {
     try {
       if (args.length == 0) {
         throw new Daikon.UserError(usage);
@@ -116,7 +115,7 @@ public class InvariantChecker {
    */
   public static void mainHelper(final String[] args)
       throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
-          ClassNotFoundException, URISyntaxException {
+          ClassNotFoundException {
     daikon.LogHelper.setupLogs(INFO);
 
     LongOpt[] longopts =
@@ -297,7 +296,7 @@ public class InvariantChecker {
     return String.format("%.2f", s / total) + "%";
   }
 
-  private static void checkInvariants(File inv_file) throws IOException, URISyntaxException {
+  private static void checkInvariants(File inv_file) throws IOException {
     // Read the invariant file
     PptMap ppts = FileIO.read_serialized_pptmap(inv_file, true);
 

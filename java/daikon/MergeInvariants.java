@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -64,7 +63,7 @@ public final class MergeInvariants {
 
   public static void main(final String[] args)
       throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
-          ClassNotFoundException, URISyntaxException {
+          ClassNotFoundException {
     try {
       mainHelper(args);
     } catch (Daikon.DaikonTerminationException e) {
@@ -86,7 +85,7 @@ public final class MergeInvariants {
   @SuppressWarnings("nullness:contracts.precondition") // private field
   public static void mainHelper(String[] args)
       throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
-          ClassNotFoundException, URISyntaxException {
+          ClassNotFoundException {
 
     daikon.LogHelper.setupLogs(INFO);
 

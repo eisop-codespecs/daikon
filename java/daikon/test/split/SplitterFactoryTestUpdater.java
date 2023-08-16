@@ -11,7 +11,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.net.URISyntaxException;
 import org.plumelib.util.FilesPlume;
 
 /**
@@ -48,7 +47,7 @@ public class SplitterFactoryTestUpdater {
    *
    * @param args are ignored
    */
-  public static void main(String[] args) throws URISyntaxException {
+  public static void main(String[] args) {
     // For debugging
     // SplitterFactory.dkconfig_delete_splitters_on_exit = false;
 
@@ -65,7 +64,7 @@ public class SplitterFactoryTestUpdater {
    *
    * @see #generateSplitters(List, List)
    */
-  private static void generateSplitters(String spinfoFile, String declsFile) throws URISyntaxException {
+  private static void generateSplitters(String spinfoFile, String declsFile) {
     List<String> spinfo = new ArrayList<>();
     spinfo.add(spinfoFile);
     List<String> decls = new ArrayList<>();
@@ -79,7 +78,7 @@ public class SplitterFactoryTestUpdater {
    * @param spinfos the spinfo files that should be used in generating the splitter java files
    * @param decls the decls files that should be used in generating the splitter java files
    */
-  private static void generateSplitters(List<String> spinfos, List<String> decls) throws URISyntaxException {
+  private static void generateSplitters(List<String> spinfos, List<String> decls) {
     HashSet<File> declsFileSet = new HashSet<>();
     HashSet<File> spinfoFiles = new HashSet<>();
     PptMap allPpts = new PptMap();

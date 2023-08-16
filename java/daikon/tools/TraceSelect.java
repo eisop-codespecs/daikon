@@ -4,7 +4,6 @@ package daikon.tools;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -245,7 +244,7 @@ public class TraceSelect {
   }
 
   @RequiresNonNull("argles")
-  private static void invokeDaikon(String dtraceName) throws IOException, URISyntaxException {
+  private static void invokeDaikon(String dtraceName) throws IOException {
 
     System.out.println("Created file: " + dtraceName);
 

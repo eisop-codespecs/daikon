@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -60,7 +59,7 @@ public class DtraceDiff {
           "      Specify a configuration option ",
           "See the Daikon manual for more information.");
 
-  public static void main(String[] args) throws URISyntaxException {
+  public static void main(String[] args) {
     try {
       mainHelper(args);
     } catch (daikon.Daikon.DaikonTerminationException e) {
@@ -75,7 +74,7 @@ public class DtraceDiff {
    * @param args command-line arguments, like those of {@link #mainHelper} and {@link #main}
    * @return true if DtraceDiff completed without an error
    */
-  public static boolean mainTester(String[] args) throws URISyntaxException {
+  public static boolean mainTester(String[] args) {
     try {
       mainHelper(args);
       return true;
@@ -92,7 +91,7 @@ public class DtraceDiff {
    *
    * @param args command-line arguments, like those of {@link #main}
    */
-  public static void mainHelper(final String[] args) throws URISyntaxException {
+  public static void mainHelper(final String[] args) {
     Set<File> declsfile1 = new HashSet<>();
     String dtracefile1 = null;
     Set<File> declsfile2 = new HashSet<>();
@@ -249,8 +248,7 @@ public class DtraceDiff {
   }
 
   public static void dtraceDiff(
-      Set<File> declsfile1, String dtracefile1, Set<File> declsfile2, String dtracefile2)
-      throws URISyntaxException {
+      Set<File> declsfile1, String dtracefile1, Set<File> declsfile2, String dtracefile2) {
 
     // System.out.printf("dtrace files = %s, %s%n", dtracefile1, dtracefile2);
     FileIO.resetNewDeclFormat();

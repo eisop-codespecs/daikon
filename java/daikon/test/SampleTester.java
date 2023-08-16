@@ -28,7 +28,6 @@ import java.io.LineNumberReader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.io.UncheckedIOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,7 +74,7 @@ public class SampleTester {
           "      Specify a class, varinfos, and ppt to debug track.",
           "      Format is class<var1,var2,var3>@ppt");
 
-  public static void main(String[] args) throws IOException, URISyntaxException {
+  public static void main(String[] args) throws IOException {
 
     LongOpt[] longopts =
         new LongOpt[] {
@@ -164,7 +163,7 @@ public class SampleTester {
    * @throws IOException if there in a problem with I/O
    */
   @Test
-  public void test_samples() throws IOException, URISyntaxException {
+  public void test_samples() throws IOException {
 
     FileIO.new_decl_format = null;
 
@@ -180,8 +179,7 @@ public class SampleTester {
     }
   }
 
-  public void proc_sample_file(InputStream commands, String filename)
-      throws IOException, URISyntaxException {
+  public void proc_sample_file(InputStream commands, String filename) throws IOException {
 
     if (PrintInvariants.dkconfig_print_inv_class) {
       System.out.println("Warning: turning off PrintInvariants.dkconfig_print_inv_class");
@@ -226,7 +224,7 @@ public class SampleTester {
   }
 
   /** Reads in the specified decl file and sets all_ppts accordingly. */
-  private void proc_decl(String decl_file) throws IOException, URISyntaxException {
+  private void proc_decl(String decl_file) throws IOException {
 
     debug_progress.fine("Processing " + decl_file);
 

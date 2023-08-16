@@ -10,7 +10,6 @@ import daikon.suppress.NIS;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -69,8 +68,7 @@ public class DaikonSimple {
   // a pptMap that contains all the program points
   public static PptMap all_ppts;
 
-  public static void main(final String[] args)
-      throws IOException, FileNotFoundException, URISyntaxException {
+  public static void main(final String[] args) throws IOException, FileNotFoundException {
 
     try {
       mainHelper(args);
@@ -86,8 +84,7 @@ public class DaikonSimple {
    * <p>Difference from {@link daikon.Daikon#mainHelper(String[])}Helper: turn off optimization
    * flags (equality, dynamic constants, NIS suppression).
    */
-  public static void mainHelper(final String[] args)
-      throws IOException, FileNotFoundException, URISyntaxException {
+  public static void mainHelper(final String[] args) throws IOException, FileNotFoundException {
 
     // set up logging information
     daikon.LogHelper.setupLogs(INFO);
