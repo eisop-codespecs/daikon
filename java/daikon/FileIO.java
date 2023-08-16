@@ -33,8 +33,9 @@ import java.io.StringWriter;
 import java.io.UncheckedIOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URL;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.NumberFormat;
@@ -310,7 +311,8 @@ public final class FileIO {
    * @param files files to be read (java.io.File)
    * @return a new PptMap containing declarations read from the files listed in the argument
    */
-  public static PptMap read_declaration_files(Collection<File> files) throws IOException {
+  public static PptMap read_declaration_files(Collection<File> files)
+      throws IOException, URISyntaxException {
     PptMap all_ppts = new PptMap();
     // Read all decls, creating PptTopLevels and VarInfos
     for (File file : files) {
@@ -324,7 +326,8 @@ public final class FileIO {
   }
 
   /** Read one decls file; add it to all_ppts. */
-  public static void read_declaration_file(File filename, PptMap all_ppts) throws IOException {
+  public static void read_declaration_file(File filename, PptMap all_ppts)
+      throws IOException, URISyntaxException {
     if (Daikon.using_DaikonSimple) {
       Processor processor = new DaikonSimple.SimpleProcessor();
       read_data_trace_file(filename.toString(), all_ppts, processor, true, false);
@@ -986,7 +989,7 @@ public final class FileIO {
    * @see #read_data_trace_file(String,PptMap,Processor,boolean,boolean)
    */
   public static void read_data_trace_files(Collection<String> files, PptMap all_ppts)
-      throws IOException {
+      throws IOException, URISyntaxException {
 
     Processor processor = new Processor();
     read_data_trace_files(files, all_ppts, processor, true);
@@ -1002,7 +1005,7 @@ public final class FileIO {
    */
   public static void read_data_trace_files(
       Collection<String> files, PptMap all_ppts, Processor processor, boolean ppts_may_be_new)
-      throws IOException {
+      throws IOException, URISyntaxException {
 
     for (String filename : files) {
       // System.out.printf("processing filename %s%n", filename);
@@ -1313,7 +1316,7 @@ public final class FileIO {
     @SuppressWarnings("StaticAssignmentInConstructor") // for progress output
     public ParseState(
         String raw_filename, boolean decl_file_p, boolean ppts_may_be_new, PptMap ppts)
-        throws IOException {
+        throws IOException, URISyntaxException {
       // Pretty up raw_filename for use in messages
       if (raw_filename.equals("-")) {
         filename = "standard input";
@@ -1468,7 +1471,8 @@ public final class FileIO {
    * {@link FileIO#process_sample(PptMap, PptTopLevel, ValueTuple, Integer)} on each record, and
    * ignores records other than samples.
    */
-  public static void read_data_trace_file(String filename, PptMap all_ppts) throws IOException {
+  public static void read_data_trace_file(String filename, PptMap all_ppts)
+      throws IOException, URISyntaxException {
     Processor processor = new Processor();
     read_data_trace_file(filename, all_ppts, processor, false, true);
   }
@@ -1484,7 +1488,7 @@ public final class FileIO {
       Processor processor,
       boolean is_decl_file,
       boolean ppts_may_be_new)
-      throws IOException {
+      throws IOException, URISyntaxException {
 
     if (debugRead.isLoggable(Level.FINE)) {
       debugRead.fine(

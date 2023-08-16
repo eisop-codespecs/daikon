@@ -173,6 +173,7 @@ import java.io.InputStream;
 import java.io.LineNumberReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -666,7 +667,7 @@ public final class Daikon {
    * The arguments to daikon.Daikon are file names. Declaration file names end in ".decls", and data
    * trace file names end in ".dtrace".
    */
-  public static void main(final String[] args) {
+  public static void main(final String[] args) throws URISyntaxException {
     try {
       mainHelper(args);
     } catch (DaikonTerminationException e) {
@@ -715,7 +716,7 @@ public final class Daikon {
    * @param args the command-line arguments
    */
   @SuppressWarnings("nullness:contracts.precondition") // private field
-  public static void mainHelper(final String[] args) {
+  public static void mainHelper(final String[] args) throws URISyntaxException {
     long startTime = System.nanoTime();
     long duration;
 
@@ -2055,7 +2056,7 @@ public final class Daikon {
    */
   @RequiresNonNull("fileio_progress")
   // set in mainHelper
-  private static PptMap load_decls_files(Set<File> decl_files) {
+  private static PptMap load_decls_files(Set<File> decl_files) throws URISyntaxException {
     long startTime = System.nanoTime();
     try {
       if (!Daikon.dkconfig_quiet) {
@@ -2285,7 +2286,8 @@ public final class Daikon {
    */
   @RequiresNonNull("fileio_progress")
   // set in mainHelper
-  private static void process_data(PptMap all_ppts, Set<String> dtrace_files) {
+  private static void process_data(PptMap all_ppts, Set<String> dtrace_files)
+      throws URISyntaxException {
     MemMonitor monitor = null;
     if (use_mem_monitor) {
       monitor = new MemMonitor("stat.out");

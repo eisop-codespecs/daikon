@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import daikon.tools.DtraceDiff;
+import java.net.URISyntaxException;
 import java.net.URL;
 import junit.framework.TestSuite;
 import org.junit.Test;
@@ -22,12 +23,13 @@ public class DtraceDiffTester {
     junit.textui.TestRunner.run(new TestSuite(DtraceDiffTester.class));
   }
 
-  private static boolean diff(String file1, String file2) {
+  private static boolean diff(String file1, String file2) throws URISyntaxException {
     // System.out.println("Diff: " + file1 + " " + file2);
     return DtraceDiff.mainTester(new String[] {find(file1), find(file2)});
   }
 
-  private static boolean diff(String option, String optval, String file1, String file2) {
+  private static boolean diff(String option, String optval, String file1, String file2)
+      throws URISyntaxException {
     // System.out.println("Diff: " + file1 + " " + file2);
     return DtraceDiff.mainTester(new String[] {option, optval, find(file1), find(file2)});
   }
@@ -46,7 +48,7 @@ public class DtraceDiffTester {
   }
 
   @Test
-  public void test_samples() {
+  public void test_samples() throws URISyntaxException {
     // these tests should succeed
     assertTrue(diff("AllTypes.dtrace.gz", "AllTypes.dtrace.gz"));
     assertTrue(diff("Hanoi.dtrace.gz", "Hanoi.dtrace.gz"));

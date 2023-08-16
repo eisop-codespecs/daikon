@@ -15,6 +15,7 @@ import daikon.inv.unary.scalar.OneOfScalar;
 import gnu.getopt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -39,7 +40,7 @@ public class InvMatch {
    * @param args command-line arguments, ignored
    */
   @SuppressWarnings("nullness") // testing method, not worth type-checking
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, URISyntaxException {
 
     // Read in the sample decls file
     Set<File> decl_files = new HashSet<>(1);
