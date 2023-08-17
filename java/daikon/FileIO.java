@@ -31,11 +31,9 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.UncheckedIOException;
-import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1370,12 +1368,7 @@ public final class FileIO {
         InputStreamReader chicReader = new InputStreamReader(chicoryInput, UTF_8);
         reader = new LineNumberReader(chicReader);
       } else if (is_url) {
-        URL url = null;
-        try {
-          url = new URI(raw_filename).toURL();
-        } catch (URISyntaxException | MalformedURLException e) {
-          throw new Error(e);
-        }
+        URL url = URI.create(raw_filename).toURL();
         InputStream stream = null; // dummy initialization for compiler's definite assignment check
         try {
           stream = url.openStream();
