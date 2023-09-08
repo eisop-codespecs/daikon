@@ -147,7 +147,11 @@ public class InvMap implements Serializable {
   @EnsuresNonNull("daikon.FileIO.new_decl_format")
   private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
     ois.defaultReadObject();
-    FileIO.new_decl_format = (Boolean) ois.readObject();
+    Boolean res = (Boolean) ois.readObject();
+    if (res == null) {
+      throw new Error("Unexpected null value from ObjectInputStream");
+    }
+    FileIO.new_decl_format = res;
     // System.out.printf("Restoring new_decl_format to %b%n",
     //                   FileIO.new_decl_format);
   }
