@@ -20,9 +20,6 @@ import typequals.prototype.qual.Prototype;
  * subset of x[]}.
  */
 public class CommonStringSequence extends SingleStringSequence {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20030822L;
 
   // Variables starting with dkconfig_ should only be set via the
@@ -31,6 +28,7 @@ public class CommonStringSequence extends SingleStringSequence {
   public static boolean dkconfig_enabled = false;
 
   private int elts = 0;
+
   /** Null means no samples have been seen yet. Empty array means intersection is empty. */
   private String @MonotonicNonNull [] intersect = null;
 
@@ -49,13 +47,11 @@ public class CommonStringSequence extends SingleStringSequence {
     return proto;
   }
 
-  /** returns whether or not this invariant is enabled */
   @Override
   public boolean enabled() {
     return dkconfig_enabled;
   }
 
-  /** instantiate an invariant on the specified slice */
   @Override
   protected CommonStringSequence instantiate_dyn(
       @Prototype CommonStringSequence this, PptSlice slice) {
@@ -78,7 +74,9 @@ public class CommonStringSequence extends SingleStringSequence {
     String result = "{";
     for (int i = 0; i < intersect.length; i++) {
       result += intersect[i];
-      if (i != intersect.length - 1) result += ", ";
+      if (i != intersect.length - 1) {
+        result += ", ";
+      }
     }
     result += "}";
     return result;

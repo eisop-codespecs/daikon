@@ -11,9 +11,6 @@ import typequals.prototype.qual.Prototype;
 
 /** Abstract base class for invariants over one variable of type {@code double}. */
 public abstract class SingleFloat extends UnaryInvariant {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20020122L;
 
   protected SingleFloat(PptSlice ppt) {
@@ -24,7 +21,6 @@ public abstract class SingleFloat extends UnaryInvariant {
     super();
   }
 
-  /** Returns whether or not the specified types are valid for unary float. */
   @Override
   public final boolean valid_types(VarInfo[] vis) {
     return (vis.length == 1) && vis[0].file_rep_type.isFloat();

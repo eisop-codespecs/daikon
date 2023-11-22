@@ -223,9 +223,11 @@ public final class Daikon {
   public static int dkconfig_progress_delay = 1000;
 
   /** The current version of Daikon. */
-  public static final String release_version = "5.8.17";
+  public static final String release_version = "5.8.19";
+
   /** The date for the current version of Daikon. */
-  public static final String release_date = "November 9, 2022";
+  public static final String release_date = "June 24, 2023";
+
   /** A description of the Daikon release (version number, date, and URL). */
   public static final String release_string =
       "Daikon version "
@@ -283,6 +285,7 @@ public final class Daikon {
   public static final boolean invariants_check_canBeMissing_arrayelt = true;
 
   public static final boolean disable_modbit_check_message = false;
+
   /**
    * Not a good idea to set this to true, as it is too easy to ignore the warnings and the modbit
    * problem can cause an error later.
@@ -413,21 +416,26 @@ public final class Daikon {
   // These variables are public so other programs can reuse the same
   // command-line options.
 
-  /** option help */
+  /** option help. */
   public static final String help_SWITCH = "help";
+
   // "-o" switch: file to which serialized output is written
-  /** option no-text-output */
+  /** option no-text-output. */
   public static final String no_text_output_SWITCH = "no_text_output";
-  /** option format */
+
+  /** option format. */
   public static final String format_SWITCH = "format";
-  /** option show-progress */
+
+  /** option show-progress. */
   public static final String show_progress_SWITCH = "show_progress";
-  /** option show-detail-progress */
+
+  /** option show-detail-progress. */
   public static final String show_detail_progress_SWITCH = "show_detail_progress";
-  /** option no-show-progress */
+
+  /** option no-show-progress. */
   public static final String no_show_progress_SWITCH = "no_show_progress";
 
-  /** option noversion */
+  /** option noversion. */
   public static final String noversion_SWITCH = "noversion";
 
   public static final String output_num_samples_SWITCH = "output_num_samples";
@@ -750,7 +758,9 @@ public final class Daikon {
     LogHelper.setupLogs(Global.debugAll ? FINE : INFO);
 
     if (!noversion_output) {
-      if (!Daikon.dkconfig_quiet) System.out.println(release_string);
+      if (!Daikon.dkconfig_quiet) {
+        System.out.println(release_string);
+      }
     }
 
     // figure out which algorithm to use in NIS to process suppressions
@@ -1782,7 +1792,9 @@ public final class Daikon {
     for (Iterator<@Prototype Invariant> i = proto_invs.iterator(); i.hasNext(); ) {
       @Prototype Invariant inv = i.next();
       assert inv != null;
-      if (!inv.enabled()) i.remove();
+      if (!inv.enabled()) {
+        i.remove();
+      }
     }
   }
 
@@ -2185,6 +2197,7 @@ public final class Daikon {
     public FileIOProgress() {
       setDaemon(true);
     }
+
     /**
      * Clients should set this variable instead of calling Thread.stop(), which is deprecated.
      * Typically a client calls "display()" before setting this. The stopping happens later, and
@@ -2210,6 +2223,7 @@ public final class Daikon {
         }
       }
     }
+
     /** Clear the display; good to do before printing to System.out. */
     public void clear() {
       if (dkconfig_progress_delay == -1) {
@@ -2222,6 +2236,7 @@ public final class Daikon {
       System.out.print("\r"); // return to beginning of line
       System.out.flush();
     }
+
     /**
      * Displays the current status. Call this if you don't want to wait until the next automatic
      * display.
@@ -2243,6 +2258,7 @@ public final class Daikon {
       }
       display(message);
     }
+
     /**
      * Displays the given message.
      *
@@ -2398,7 +2414,9 @@ public final class Daikon {
       debugProgress.fine("Constant Post Processing ... ");
       startTime = System.nanoTime();
       for (PptTopLevel ppt : all_ppts.ppt_all_iterable()) {
-        if (ppt.constants != null) ppt.constants.post_process();
+        if (ppt.constants != null) {
+          ppt.constants.post_process();
+        }
       }
       duration = System.nanoTime() - startTime;
       debugProgress.fine(
@@ -2626,7 +2644,9 @@ public final class Daikon {
 
   /** Removed invariants as specified in omit_types. */
   private static void processOmissions(PptMap allPpts) {
-    if (omit_types['0']) allPpts.removeUnsampled();
+    if (omit_types['0']) {
+      allPpts.removeUnsampled();
+    }
     for (PptTopLevel ppt : allPpts.asCollection()) {
       ppt.processOmissions(omit_types);
     }

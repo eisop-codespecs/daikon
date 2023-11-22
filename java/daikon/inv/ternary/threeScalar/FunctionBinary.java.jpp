@@ -116,9 +116,6 @@ import typequals.prototype.qual.Prototype;
  */
 @SuppressWarnings("UnusedVariable")  // generated code, complex rules for when var is used
 public abstract class CLASSNAME extends SUPERCLASS {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20031030L;
 
   /** Boolean. True if CLASSNAME invariants should be considered. */
@@ -146,13 +143,11 @@ public abstract class CLASSNAME extends SUPERCLASS {
     super();
   }
 
-  /** returns whether or not this invariant is enabled */
   @Override
   public boolean enabled() {
     return dkconfig_enabled;
   }
 
-  /** CLASSNAME is only valid on IS_INTEGRAL types. */
   @Override
   public boolean instantiate_ok(VarInfo[] vis) {
 

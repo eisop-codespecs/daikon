@@ -134,7 +134,8 @@ public class AnnotateNullable {
       if (ppt.is_class()) {
         @SuppressWarnings(
             "nullness") // map: retrieve class name from class Ppt name, with string manipulation
-        @NonNull List<PptTopLevel> static_methods = class_map.get(ppt.name().replace(":::CLASS", ""));
+        @NonNull List<PptTopLevel> static_methods =
+            class_map.get(ppt.name().replace(":::CLASS", ""));
         int child_cnt = 0;
         // TODO: Once Checker Framework issue 565 has been fixed (https://tinyurl.com/cfissue/565),
         // change the following two lines back to
@@ -322,7 +323,9 @@ public class AnnotateNullable {
     if (stub_format) {
       System.out.printf(" %s %s(", return_annotation, ppt.ppt_name.getMethodName());
       for (int i = 0; i < params.size(); i++) {
-        if (i != 0) System.out.printf(" ,");
+        if (i != 0) {
+          System.out.printf(" ,");
+        }
         System.out.printf("%s %s %s", annos.get(i), "type-goes-here", names.get(i));
       }
       System.out.printf("); // %d samples%n", ppt.num_samples());

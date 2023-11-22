@@ -57,7 +57,8 @@ default: summary-w-daikon
 # Set up potential OS_ID and OS_ID+OS_REL specific goal targets.
 OS_ID := $(shell ${DAIKONDIR}/scripts/lsb_release -si)
 OS_REL := $(shell ${DAIKONDIR}/scripts/lsb_release -sr)
-GOAL := goal
+# bogus goal to force goal_name to try all paths
+GOAL := DUMMY
 
 $(info OS_ID="$(OS_ID)")
 $(info OS_REL="$(OS_REL)")
@@ -120,6 +121,9 @@ endif
 endif
 
 ifeq ($(OS_ID),Ubuntu)
+ifeq ($(OS_REL),23.04)
+	GOAL := goal-Ubuntu2304
+endif
 ifeq ($(OS_REL),22.10)
 	GOAL := goal-Ubuntu2210
 endif

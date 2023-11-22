@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import org.checkerframework.checker.interning.qual.Interned;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
@@ -97,8 +98,10 @@ public abstract class DaikonVariableInfo
    * @see #getTypeNameOnly()
    */
   protected String typeName;
+
   /** The printed representation type that will appear in the .decls declaration. */
   protected String repTypeName;
+
   /** The printed comparability information that will appear in the .decls declaration. */
   protected String compareInfoString = compareInfoDefaultString;
 
@@ -378,20 +381,15 @@ public abstract class DaikonVariableInfo
       return "nonsensical";
     }
 
-    StringBuilder buf = new StringBuilder();
+    StringJoiner buf = new StringJoiner(" ", "[", "]");
 
-    buf.append("[");
     for (Iterator<Object> iter = theValues.iterator(); iter.hasNext(); ) {
       Object elementVal = iter.next();
 
       // hash arrays...
       // don't want to print arrays within arrays
-      buf.append(getValueStringOfObject(elementVal, true));
-
-      // put space between elements in array
-      if (iter.hasNext()) buf.append(" ");
+      buf.add(getValueStringOfObject(elementVal, true));
     }
-    buf.append("]");
 
     return buf.toString();
   }
@@ -428,13 +426,13 @@ public abstract class DaikonVariableInfo
       debug_vars.log("processing parameter '%s'%n", name);
       debug_vars.indent();
       DaikonVariableInfo theChild =
-          addParamDeclVar(cinfo, type, name, /*offset=*/ "", depth, i, param_offset);
+          addParamDeclVar(cinfo, type, name, /* offset= */ "", depth, i, param_offset);
       param_offset++;
       if ((type == Double.TYPE) || (type == Long.TYPE)) {
         param_offset++;
       }
       assert cinfo.clazz != null : "@AssumeAssertion(nullness): need to check justification";
-      theChild.addChildNodes(cinfo, type, name, /*offset=*/ "", depth);
+      theChild.addChildNodes(cinfo, type, name, /* offset= */ "", depth);
       debug_vars.exdent();
     }
     debug_vars.log("exit addParameters%n");

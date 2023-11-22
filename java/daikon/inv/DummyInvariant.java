@@ -32,9 +32,6 @@ import typequals.prototype.qual.Prototype;
  * supplied in the splitter info file.
  */
 public class DummyInvariant extends Invariant {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20030220L;
 
   private @Nullable String daikonFormat;
@@ -110,7 +107,7 @@ public class DummyInvariant extends Invariant {
             dbcFormat,
             csharpFormat,
             // Not valid until we find a slice for it
-            /*valid=*/ false);
+            /* valid= */ false);
 
     // Find between 1 and 3 unique variables, to pick a slice to put
     // this in.
@@ -119,7 +116,9 @@ public class DummyInvariant extends Invariant {
       uniqVarsSet.add(vars[i].canonicalRep());
     }
     int sliceSize = uniqVarsSet.size();
-    if (sliceSize > 3) sliceSize = 3;
+    if (sliceSize > 3) {
+      sliceSize = 3;
+    }
     /*NNC:@MonotonicNonNull*/ VarInfo[] newVars = new VarInfo[sliceSize];
     {
       Iterator<VarInfo> it = uniqVarsSet.iterator();

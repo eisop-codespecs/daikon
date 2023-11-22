@@ -79,7 +79,7 @@ import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.plumelib.util.ArraysPlume;
 import org.plumelib.util.Intern;
-import org.plumelib.util.Pair;
+import org.plumelib.util.IPair;
 import typequals.prototype.qual.NonPrototype;
 import typequals.prototype.qual.Prototype;
 
@@ -89,9 +89,6 @@ import typequals.prototype.qual.Prototype;
  * of SCALAR.
  */
 public final class CLASSNAME extends SEQUENCESCALAR {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20031024L;
 
   public static final Logger debug = Logger.getLogger("daikon.inv.binary.Member");
@@ -111,18 +108,16 @@ public final class CLASSNAME extends SEQUENCESCALAR {
 
   private static @Prototype CLASSNAME proto = new @Prototype CLASSNAME();
 
-  /** Returns the prototype invariant for CLASSNAME */
+  /** Returns the prototype invariant for CLASSNAME. */
   public static @Prototype CLASSNAME get_proto() {
     return proto;
   }
 
-  /** Returns whether or not this invariant is enabled. */
   @Override
   public boolean enabled() {
     return dkconfig_enabled;
   }
 
-  /** instantiates the invariant on the specified slice */
   @Override
   protected CLASSNAME instantiate_dyn(@Prototype PptSlice slice) {
     return new CLASSNAME(slice);
@@ -230,13 +225,17 @@ public final class CLASSNAME extends SEQUENCESCALAR {
           left_included = true;
         }
         if (seq_left_index == scl_index) {
-          if (seq_left_shift <= scl_shift) left_included = true;
+          if (seq_left_shift <= scl_shift) {
+            left_included = true;
+          }
         }
         if (seq_right_index == null) {
           right_included = true;
         }
         if (seq_right_index == scl_index) {
-          if (seq_right_shift >= scl_shift) right_included = true;
+          if (seq_right_shift >= scl_shift) {
+            right_included = true;
+          }
         }
         if (left_included && right_included) {
           return true;
@@ -259,7 +258,7 @@ public final class CLASSNAME extends SEQUENCESCALAR {
       // else if the scalar is min or max of a sequence
       } else if ((sclvar.derived instanceof SequenceMin)
                  || (sclvar.derived instanceof SequenceMax)) {
-        Pair<DiscardCode, String> di = SUBSEQUENCE.isObviousSubSequence(sclvar_seq, seqvar);
+        IPair<DiscardCode, String> di = SUBSEQUENCE.isObviousSubSequence(sclvar_seq, seqvar);
         return di != null;
       }
     }

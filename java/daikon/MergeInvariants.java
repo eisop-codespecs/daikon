@@ -62,7 +62,10 @@ public final class MergeInvariants {
           "      Specify an output inv file.  If not specified, the results are printed");
 
   public static void main(final String[] args)
-      throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
+      throws FileNotFoundException,
+          StreamCorruptedException,
+          OptionalDataException,
+          IOException,
           ClassNotFoundException {
     try {
       mainHelper(args);
@@ -84,7 +87,10 @@ public final class MergeInvariants {
    */
   @SuppressWarnings("nullness:contracts.precondition") // private field
   public static void mainHelper(String[] args)
-      throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
+      throws FileNotFoundException,
+          StreamCorruptedException,
+          OptionalDataException,
+          IOException,
           ClassNotFoundException {
 
     daikon.LogHelper.setupLogs(INFO);
@@ -367,7 +373,9 @@ public final class MergeInvariants {
     if (debug.isLoggable(FINE)) {
       debug.fine("PPT Hierarchy");
       for (PptTopLevel ppt : merge_ppts.pptIterable()) {
-        if (ppt.parents.size() == 0) ppt.debug_print_tree(debug, 0, null);
+        if (ppt.parents.size() == 0) {
+          ppt.debug_print_tree(debug, 0, null);
+        }
       }
     }
 
@@ -386,7 +394,9 @@ public final class MergeInvariants {
     // System.out.println("Creating implications ");
     debugProgress.fine("Adding Implications ... ");
     for (PptTopLevel ppt : merge_ppts.pptIterable()) {
-      if (ppt.num_samples() > 0) ppt.addImplications();
+      if (ppt.num_samples() > 0) {
+        ppt.addImplications();
+      }
     }
     long duration = System.nanoTime() - startTime;
     debugProgress.fine("Time spent in implications: " + TimeUnit.NANOSECONDS.toSeconds(duration));

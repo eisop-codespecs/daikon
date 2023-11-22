@@ -56,9 +56,6 @@ import typequals.prototype.qual.Prototype;
  * z}.
  */
 public final /*(at)Interned*/ class Equality extends Invariant {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20021231L;
 
   public static final Logger debug = Logger.getLogger("daikon.inv.Equality");
@@ -132,6 +129,7 @@ public final /*(at)Interned*/ class Equality extends Invariant {
   // Accessors
 
   private @Nullable VarInfo leaderCache = null;
+
   /**
    * Return the canonical VarInfo of this. Note that the leader never changes.
    *
@@ -216,7 +214,9 @@ public final /*(at)Interned*/ class Equality extends Invariant {
       result.append(var.name());
       result.append("[" + var.varinfo_index + "]");
       // result.append("[" + var.comparability + "]");
-      if (var == leader()) result.append("L");
+      if (var == leader()) {
+        result.append("L");
+      }
     }
     return result.toString();
   }
@@ -484,7 +484,10 @@ public final /*(at)Interned*/ class Equality extends Invariant {
    * invariant as well since that invariant is used in suppressions and obvious tests.
    */
   public void postProcess() {
-    if (this.numSamples() == 0) return; // All were missing or not present
+    if (this.numSamples() == 0) {
+      // All were missing or not present
+      return;
+    }
     PptTopLevel parent = this.ppt.parent;
     VarInfo[] varArray = this.vars.toArray(new VarInfo[0]);
     if (debugPostProcess.isLoggable(Level.FINE)) {

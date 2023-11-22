@@ -20,9 +20,6 @@ import typequals.prototype.qual.Prototype;
  * r} is the (constant) remainder, and {@code m} is the (constant) modulus.
  */
 public class Modulus extends SingleScalar {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20030822L;
 
   // Variables starting with dkconfig_ should only be set via the
@@ -55,13 +52,11 @@ public class Modulus extends SingleScalar {
     return proto;
   }
 
-  /** Returns whether or not this invariant is enabled. */
   @Override
   public boolean enabled() {
     return dkconfig_enabled;
   }
 
-  /** Modulus is only valid on integral types. */
   @Override
   public boolean instantiate_ok(VarInfo[] vis) {
 
@@ -72,7 +67,6 @@ public class Modulus extends SingleScalar {
     return vis[0].file_rep_type.baseIsIntegral();
   }
 
-  /** Instantiate an invariant on the specified slice. */
   @Override
   protected Modulus instantiate_dyn(@Prototype Modulus this, PptSlice slice) {
     return new Modulus(slice);

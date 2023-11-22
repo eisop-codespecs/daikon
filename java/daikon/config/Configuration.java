@@ -82,6 +82,7 @@ public final class Configuration implements Serializable {
     public ConfigException() {
       super();
     }
+
     // We are Serializable, so we specify a version to allow changes to
     // method signatures without breaking serialization.  If you add or
     // remove fields, you should change this number to the current date.
@@ -123,8 +124,13 @@ public final class Configuration implements Serializable {
     assert input != null;
     for (String line : new EntryReader(input)) {
       line = line.trim();
-      if (line.length() == 0) continue; // skip blank lines
-      if (line.charAt(0) == '#') continue; // skip # comment lines
+      // Skip blank and comment lines
+      if (line.length() == 0) {
+        continue;
+      }
+      if (line.charAt(0) == '#') {
+        continue;
+      }
       apply(line);
     }
   }

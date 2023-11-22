@@ -661,6 +661,7 @@ public class InvariantAddAndCheckTester {
       }
       throw new RuntimeException("Cannot find format_using method");
     }
+
     /**
      * This function loads a class from file into the JVM given its fully-qualified name.
      *
@@ -758,10 +759,8 @@ public class InvariantAddAndCheckTester {
       // invariant, "b" for the second, and so on
       // - The ProglangType will be specified in the parameters
       // - The comparability will be none
-      @SuppressWarnings({
-        "interning",
-        "signedness:cast.incomparable" // `i` is small enough to prevent overflow
-      })
+
+      @SuppressWarnings("interning")
       @Interned VarInfo result =
           new VarInfo(
               new String(new char[] {(char) ('a' + i)}) + arrayModifier,

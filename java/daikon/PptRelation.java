@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.checkerframework.checker.initialization.qual.UnderInitialization;
@@ -33,9 +34,6 @@ import org.checkerframework.dataflow.qual.SideEffectFree;
  */
 public class PptRelation implements Serializable {
 
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20030819L;
 
   /**
@@ -143,11 +141,9 @@ public class PptRelation implements Serializable {
   /** Return a string containing all of the parent&rarr;child var relations. */
   public String parent_to_child_var_string() {
 
-    StringBuilder var_str = new StringBuilder();
-    for (VarInfo pv : parent_to_child_map.keySet()) {
-      VarInfo cv = parent_to_child_map.get(pv);
-      if (var_str.length() > 0) var_str.append(", ");
-      var_str.append(pv.name() + "->" + cv.name());
+    StringJoiner var_str = new StringJoiner(", ");
+    for (Map.Entry<VarInfo, VarInfo> entry : parent_to_child_map.entrySet()) {
+      var_str.add(entry.getKey().name() + "->" + entry.getValue().name());
     }
 
     return var_str.toString();
@@ -658,6 +654,7 @@ public class PptRelation implements Serializable {
       this.ppt_split = ppt_split;
     }
   }
+
   /**
    * Initialize the hierarchical relationship between ppts. Specifically process each ppt, find its
    * parent(s) in the partial order, and fill this point into the children field in the parent. Note
@@ -696,7 +693,9 @@ public class PptRelation implements Serializable {
             rel = newObjectMethodRel(parent, ppt);
           } else {
             parent = all_ppts.get(parent.ppt_name.makeClassStatic());
-            if (parent != null) rel = newObjectMethodRel(parent, ppt);
+            if (parent != null) {
+              rel = newObjectMethodRel(parent, ppt);
+            }
           }
         }
 
@@ -705,7 +704,9 @@ public class PptRelation implements Serializable {
         PptTopLevel parent = all_ppts.get(pname.makeExit());
         // System.out.printf("Parent of %s is %s%n", pname.name(),
         //                   parent.name());
-        if (parent != null) rel = newCombinedExitExitNNRel(parent, ppt);
+        if (parent != null) {
+          rel = newCombinedExitExitNNRel(parent, ppt);
+        }
       }
 
       // If a relation was created, connect it into its ppts
@@ -876,7 +877,9 @@ public class PptRelation implements Serializable {
     if (debug.isLoggable(Level.FINE)) {
       debug.fine("PPT Hierarchy");
       for (PptTopLevel ppt : all_ppts.pptIterable()) {
-        if (ppt.parents.size() == 0) ppt.debug_print_tree(debug, 0, null);
+        if (ppt.parents.size() == 0) {
+          ppt.debug_print_tree(debug, 0, null);
+        }
       }
     }
 
@@ -1045,7 +1048,9 @@ public class PptRelation implements Serializable {
     if (debug.isLoggable(Level.FINE)) {
       debug.fine("PPT Hierarchy");
       for (PptTopLevel ppt : all_ppts.pptIterable()) {
-        if (ppt.parents.size() == 0) ppt.debug_print_tree(debug, 0, null);
+        if (ppt.parents.size() == 0) {
+          ppt.debug_print_tree(debug, 0, null);
+        }
       }
     }
 

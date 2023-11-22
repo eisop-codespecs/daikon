@@ -31,10 +31,13 @@ class CollectFieldsVisitor extends DepthFirstVisitor {
 
   /** Names of all fields. */
   private List<String> allNames;
+
   /** Names of all fields with owner annotations. */
   private List<String> ownedNames;
+
   /** Names of all final fields. */
   private List<String> finalNames;
+
   /**
    * True if the fields {@code allNames}, {@code ownedNames}, and {@code finalNames} are up-to-date.
    */
@@ -67,8 +70,12 @@ class CollectFieldsVisitor extends DepthFirstVisitor {
       {
         String name = name(fd.f1);
         allNames.add(name);
-        if (isFinal) finalNames.add(name);
-        if (isOwned) ownedNames.add(name);
+        if (isFinal) {
+          finalNames.add(name);
+        }
+        if (isOwned) {
+          ownedNames.add(name);
+        }
       }
       NodeListOptional fds = fd.f2;
       if (fds.present()) {
@@ -80,8 +87,12 @@ class CollectFieldsVisitor extends DepthFirstVisitor {
           }
           String name = name((VariableDeclarator) ns.elementAt(1));
           allNames.add(name);
-          if (isFinal) finalNames.add(name);
-          if (isOwned) ownedNames.add(name);
+          if (isFinal) {
+            finalNames.add(name);
+          }
+          if (isOwned) {
+            ownedNames.add(name);
+          }
         }
       }
     }

@@ -56,9 +56,6 @@ import typequals.prototype.qual.Prototype;
 @Prototype
 public abstract class Invariant implements Serializable, Cloneable // but don't YOU clone it
 {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20040921L;
 
   /** General debug tracer. */
@@ -481,7 +478,9 @@ public abstract class Invariant implements Serializable, Cloneable // but don't 
    */
   public void falsify(@NonPrototype Invariant this) {
     falsified = true;
-    if (logOn()) log("Destroyed %s", format());
+    if (logOn()) {
+      log("Destroyed %s", format());
+    }
   }
 
   /** Clear the falsified flag. */
@@ -1010,8 +1009,8 @@ public abstract class Invariant implements Serializable, Cloneable // but don't 
     }
     for (int i = 0; i < s.length(); i++) {
       char c = s.charAt(i);
-      if (c == '\n') // not lineSep
-      buf.append("\\n"); // not lineSep
+      // The following line uses '\n' rather than linesep.
+      if (c == '\n') buf.append("\\n");
       else if (c == '\r') buf.append("\\r");
       else if (c == '\t') buf.append("\\t");
       else if (c == '\f') buf.append("\\f");
@@ -1045,7 +1044,9 @@ public abstract class Invariant implements Serializable, Cloneable // but don't 
       // Guarding implications should compare as if they were without the
       // guarding predicate
 
-      if (inv1 instanceof GuardingImplication) inv1 = ((GuardingImplication) inv1).right;
+      if (inv1 instanceof GuardingImplication) {
+        inv1 = ((GuardingImplication) inv1).right;
+      }
       if (inv2 instanceof GuardingImplication) {
         inv2 = ((GuardingImplication) inv2).right;
       }
@@ -1402,7 +1403,9 @@ public abstract class Invariant implements Serializable, Cloneable // but don't 
     // // // obvious-derived invariants to lists in the first place.
     DiscardInfo staticResult = isObviousStatically_SomeInEquality();
     if (staticResult != null) {
-      if (debugPrint.isLoggable(Level.FINE)) debugPrint.fine("  [obvious:  " + repr_prob() + " ]");
+      if (debugPrint.isLoggable(Level.FINE)) {
+        debugPrint.fine("  [obvious:  " + repr_prob() + " ]");
+      }
       return staticResult;
     } else {
       DiscardInfo dynamicResult = isObviousDynamically_SomeInEquality();
@@ -2059,7 +2062,9 @@ public abstract class Invariant implements Serializable, Cloneable // but don't 
       @Nullable Object... args) {
     if (ppt != null) {
       String msg = format;
-      if (args.length > 0) msg = String.format(format, args);
+      if (args.length > 0) {
+        msg = String.format(format, args);
+      }
       return Debug.log(getClass(), ppt, msg);
     } else {
       return false;
