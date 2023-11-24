@@ -13,9 +13,6 @@ import typequals.prototype.qual.Prototype;
  * Abstract base class for invariants over one numeric (scalar) variable, such as {@code x != 0}.
  */
 public abstract class SingleScalar extends UnaryInvariant {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20020122L;
 
   protected SingleScalar(PptSlice ppt) {
@@ -38,7 +35,6 @@ public abstract class SingleScalar extends UnaryInvariant {
     return (vis.length == 1) && vis[0].file_rep_type.isScalar();
   }
 
-  /** Returns whether or not the specified types are valid for unary scalar. */
   @Override
   public final boolean valid_types(VarInfo[] vis) {
     return valid_types_static(vis);

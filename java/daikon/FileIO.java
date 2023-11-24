@@ -87,28 +87,38 @@ public final class FileIO {
   // Program point name tags
   /** String used to append a ppt type to a ppt name. */
   public static final String ppt_tag_separator = ":::";
+
   /** String used to identify entry ppt names. */
   public static final String enter_suffix = "ENTER";
+
   /** String used to mark entry ppt names. */
   public static final String enter_tag = ppt_tag_separator + enter_suffix;
+
   // EXIT does not necessarily appear at the end of the program point name;
   // a number may follow it.
   /** String used to identify exit ppt names. */
   public static final String exit_suffix = "EXIT";
+
   /** String used to mark exit ppt names. */
   public static final String exit_tag = ppt_tag_separator + exit_suffix;
+
   /** To be deleted. */
   public static final String throws_suffix = "THROWS";
+
   /** To be deleted. */
   public static final String throws_tag = ppt_tag_separator + throws_suffix;
 
   public static final String object_suffix = "OBJECT";
+
   /** String used to mark object ppt names. */
   public static final String object_tag = ppt_tag_separator + object_suffix;
+
   /** String used to identify class ppt names. */
   public static final String class_static_suffix = "CLASS";
+
   /** String used to mark class ppt names. */
   public static final String class_static_tag = ppt_tag_separator + class_static_suffix;
+
   /** String used to identify global ppt names. */
   public static final String global_suffix = "GLOBAL";
 
@@ -220,6 +230,7 @@ public final class FileIO {
 
   /** Debug tracer for reading. */
   public static final Logger debugRead = Logger.getLogger("daikon.FileIO.read");
+
   /** Debug tracer for printing. */
   public static final Logger debugPrint = Logger.getLogger("daikon.FileIO.printDtrace");
 
@@ -384,7 +395,9 @@ public final class FileIO {
             // There is no need to check "varmap.containsKey(vardef.name)"
             // because this is the first variable.
             assert varmap.isEmpty();
-            if (var_included(vardef.name)) varmap.put(vardef.name, vardef);
+            if (var_included(vardef.name)) {
+              varmap.put(vardef.name, vardef);
+            }
           } else if (record == "ppt-type") { // interned
             ppt_type = parse_ppt_type(state, scanner);
           } else {
@@ -425,7 +438,9 @@ public final class FileIO {
             if (varmap.containsKey(vardef.name)) {
               decl_error(state, "var %s declared twice", vardef.name);
             }
-            if (var_included(vardef.name)) varmap.put(vardef.name, vardef);
+            if (var_included(vardef.name)) {
+              varmap.put(vardef.name, vardef);
+            }
           } else if (record == "min-value") { // interned
             vardef.parse_min_value(scanner);
           } else if (record == "max-value") { // interned
@@ -828,11 +843,11 @@ public final class FileIO {
     @Interned String version = need(state, scanner, "declaration version number");
     need_eol(state, scanner);
     boolean new_df;
-    if (version == "2.0") // interned
-    new_df = true;
-    else if (version == "1.0") // interned
-    new_df = false;
-    else {
+    if (version == "2.0") { // interned
+      new_df = true;
+    } else if (version == "1.0") { // interned
+      new_df = false;
+    } else {
       decl_error(state, "'%s' found where 1.0 or 2.0 expected", version);
       throw new Error("Can't get here"); // help out definite assignment analysis
     }
@@ -883,14 +898,23 @@ public final class FileIO {
       this.mods = mods;
     }
 
-    // Print the Invocation on two lines, indented by two spaces
-    // The receiver Invocation may be canonicalized or not.
+    /**
+     * Return a string representation of this. The Invocation is formatted on two lines, indented by
+     * two spaces. The receiver Invocation may be canonicalized or not.
+     *
+     * @return a string representation of this
+     */
     String format(@GuardSatisfied Invocation this) {
       return format(true);
     }
 
-    // Print the Invocation on one or two lines, indented by two spaces.
-    // The receiver Invocation may be canonicalized or not.
+    /**
+     * Return a string representation of this. The Invocation is formatted on two lines, indented by
+     * two spaces. The receiver Invocation may be canonicalized or not.
+     *
+     * @param show_values if true, show values; otherwise, return just the Ppt name
+     * @return a string representation of this
+     */
     String format(@GuardSatisfied Invocation this, boolean show_values) {
       if (!show_values) {
         return "  " + ppt.ppt_name.getNameWithoutPoint();
@@ -917,9 +941,11 @@ public final class FileIO {
             val)) // succeeds only for canonicalized Invocations.  Can be an == test, but there is
           // little point.  val can be null, so it cannot be the receiver.
           pw.print("<hashcode>");
-        else if (val instanceof int[]) pw.print(Arrays.toString((int[]) val));
-        else if (val instanceof String) pw.print(StringsPlume.escapeNonASCII((String) val));
-        else {
+        else if (val instanceof int[]) {
+          pw.print(Arrays.toString((int[]) val));
+        } else if (val instanceof String) {
+          pw.print(StringsPlume.escapeNonASCII((String) val));
+        } else {
           pw.print(val);
         }
       }
@@ -1457,6 +1483,7 @@ public final class FileIO {
   // The @MonotonicNonNull property is not true globally, but within every
   // method it's true, so it is a useful annotation.
   public static @MonotonicNonNull ParseState data_trace_state = null;
+
   // The variable is only ever cleared at the end of a routine that set it.
   @SuppressWarnings("nullness") // reinitialization
   private static void clear_data_trace_state() {
@@ -1675,7 +1702,10 @@ public final class FileIO {
         return;
       }
       String ppt_name = line;
-      if (new_decl_format) ppt_name = unescape_decl(line); // interning bugfix: no need to intern
+      if (new_decl_format) {
+        // interning bugfix: no need to intern
+        ppt_name = unescape_decl(line);
+      }
       ppt_name = user_mod_ppt_name(ppt_name);
       if (!ppt_included(ppt_name)) {
         // System.out.printf("skipping ppt %s%n", line);
@@ -2662,58 +2692,78 @@ public final class FileIO {
       "nullness") // undocumented class needs documentation before annotating with nullness
   public static class VarDefinition implements java.io.Serializable, Cloneable {
     static final long serialVersionUID = 20060524L;
+
     /** Current information about input file and previously parsed values. */
     transient ParseState state;
+
     /** Name of the variable (required). */
     public String name;
+
     /** Type of the variable (required). */
     public VarKind kind = null;
+
     /** Name of variable that contains this variable (optional) */
     // seems non-null for arrays/sequences
     public @Nullable String enclosing_var_name;
+
     /** the simple (not fully specified) name of this variable (optional) */
     public @Nullable String relative_name = null;
+
     /** Type of reference for structure/class variables. */
     public RefType ref_type = RefType.POINTER;
+
     /** Number of array dimensions (0 or 1). */
     public int arr_dims = 0;
+
     /**
      * Non-null iff (vardef.kind == VarKind.FUNCTION). The arguments that were used to create this
      * function application.
      */
     @SuppressWarnings("serial")
     public @Nullable List<String> function_args = null;
+
     /** The type of the variable as stored in the dtrace file (required) */
     public ProglangType rep_type = null;
+
     /** Declared type of the variable as an arbitrary string (required) */
     public ProglangType declared_type = null;
+
     /** Variable flags (optional) */
     public EnumSet<VarFlags> flags = EnumSet.noneOf(VarFlags.class);
+
     /** Language specific variable flags (optional) */
     public EnumSet<LangFlags> lang_flags = EnumSet.noneOf(LangFlags.class);
+
     /** Comparability of this variable (required. */
     @SuppressWarnings("serial")
     public VarComparability comparability = null;
+
     /** Parent program points in ppt hierarchy (optional) */
     @SuppressWarnings("serial")
     public List<VarParent> parents;
+
     /** Non-null if this 'variable' always has the same value (optional) */
     @SuppressWarnings("serial")
     public @Nullable @Interned Object static_constant_value = null;
+
     /**
      * Non-null if it is statically known that the value of the variable will be always greater than
      * or equal to this value.
      */
     public @Nullable String min_value = null;
+
     /**
      * Non-null if it is statically known that the value of the variable will be always less than or
      * equal to this value.
      */
     public @Nullable String max_value = null;
+
     /** Non-null if it is statically known that the array will have at least this many elements. */
     public @Nullable Integer min_length = null;
+
     /** Non-null if it is statically known that the array will have up to this many elements. */
     public @Nullable Integer max_length = null;
+
     /** Non-null if the set of valid values for the variable is statically known. */
     public @Nullable String valid_values = null;
 
@@ -3048,7 +3098,10 @@ public final class FileIO {
    * @param args arguments for the format string
    */
   private static void decl_error(ParseState state, String format, @Nullable Object... args) {
-    @SuppressWarnings("formatter:format.string") // https://tinyurl.com/cfissue/2584
+    @SuppressWarnings({
+      "formatter:unneeded.suppression", // temporary?
+      "formatter:format.string" // https://tinyurl.com/cfissue/2584
+    })
     String msg = String.format(format, args) + state.line_file_message();
     throw new Daikon.UserError(msg);
   }

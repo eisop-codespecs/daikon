@@ -24,10 +24,10 @@ The correct way to build the system is to run 'make'.
 
 package daikon.derive.binary;
 
+import org.checkerframework.checker.interning.qual.Interned;
+import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
-import org.checkerframework.checker.lock.qual.GuardSatisfied;
-import org.checkerframework.checker.interning.qual.Interned;
 import daikon.*;
 import daikon.derive.*;
 import java.util.logging.Logger;
@@ -39,9 +39,6 @@ import org.plumelib.util.Intern;
  * data structure. Derived type is the same as that of the first sequence.
  */
 public final class CLASSNAME extends BinaryDerivation {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20020122L;
 
   /** Debug tracer. */
@@ -150,10 +147,18 @@ public final class CLASSNAME extends BinaryDerivation {
     int mod = ValueTuple.UNMODIFIED;
     int mod1 = var1().getModified(full_vt);
     int mod2 = var2().getModified(full_vt);
-    if (mod1 == ValueTuple.MODIFIED) mod = ValueTuple.MODIFIED;
-    if (mod2 == ValueTuple.MODIFIED) mod = ValueTuple.MODIFIED;
-    if (mod1 == ValueTuple.MISSING_NONSENSICAL) mod = ValueTuple.MISSING_NONSENSICAL;
-    if (mod2 == ValueTuple.MISSING_NONSENSICAL) mod = ValueTuple.MISSING_NONSENSICAL;
+    if (mod1 == ValueTuple.MODIFIED) {
+      mod = ValueTuple.MODIFIED;
+    }
+    if (mod2 == ValueTuple.MODIFIED) {
+      mod = ValueTuple.MODIFIED;
+    }
+    if (mod1 == ValueTuple.MISSING_NONSENSICAL) {
+      mod = ValueTuple.MISSING_NONSENSICAL;
+    }
+    if (mod2 == ValueTuple.MISSING_NONSENSICAL) {
+      mod = ValueTuple.MISSING_NONSENSICAL;
+    }
     /*
      * v1\v2  Unm  Mod  Mis
      *
@@ -166,7 +171,9 @@ public final class CLASSNAME extends BinaryDerivation {
     int count = 0;
     // Find length of output first
     for (int i = 0; i < predicate.length; i++) {
-      if ((predicate[i] == choose) ^ !keep) count += 1;
+      if ((predicate[i] == choose) ^ !keep) {
+        count += 1;
+      }
     }
 
     if (val1 instanceof PRIMITIVE[]) {
@@ -226,7 +233,6 @@ public final class CLASSNAME extends BinaryDerivation {
     return false;
   }
 
-  /** Returns the ESC name. */
   @SideEffectFree
   @Override
   public String esc_name(String index) {

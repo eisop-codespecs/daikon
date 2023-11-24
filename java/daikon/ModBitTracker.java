@@ -15,9 +15,6 @@ import org.checkerframework.checker.signedness.qual.Signed;
  * each sample seen in order, whether that variable was present or not.
  */
 public class ModBitTracker implements Serializable, Cloneable {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20031014L;
 
   // Should make this a configuration option.
@@ -25,6 +22,7 @@ public class ModBitTracker implements Serializable, Cloneable {
 
   /** The maximum number of BitSets; the size of modbits_arrays. */
   private int num_vars;
+
   /** The size of each BitSet in modbits_arrays. */
   private int num_samples;
 
@@ -51,8 +49,10 @@ public class ModBitTracker implements Serializable, Cloneable {
   // Member variables to avoid re-allocating every time "add" is entered.
   /** The bits for this ValueTuple (indexed by equivalence set. */
   private boolean[] this_bits;
+
   /** True if the corresponding element of this_bits has a valid value. */
   private boolean[] this_bits_valid;
+
   /**
    * The equivalence set for when an equivalence set is split: if a variable has a conflicting bit,
    * then it goes to the specified index instead.
@@ -79,7 +79,9 @@ public class ModBitTracker implements Serializable, Cloneable {
     this_bits = new boolean[num_vars];
     this_bits_valid = new boolean[num_vars];
     this_bits_exception_index = new int[num_vars];
-    if (debug) checkRep();
+    if (debug) {
+      checkRep();
+    }
   }
 
   public int num_vars() {
@@ -153,7 +155,9 @@ public class ModBitTracker implements Serializable, Cloneable {
 
   /** Add to this the modbits for the given ValueTuple. */
   public void add(ValueTuple vt, int count) {
-    if (debug) checkRep();
+    if (debug) {
+      checkRep();
+    }
     assert vt.size() == num_vars : "vt.size()=" + vt.size() + ", num_vars = " + num_vars;
     if (num_vars == 0) {
       num_samples += count;
@@ -197,6 +201,8 @@ public class ModBitTracker implements Serializable, Cloneable {
     }
     num_samples += count;
 
-    if (debug) checkRep();
+    if (debug) {
+      checkRep();
+    }
   }
 }

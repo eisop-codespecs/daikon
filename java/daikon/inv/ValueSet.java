@@ -46,9 +46,6 @@ import org.plumelib.util.LimitedSizeLongSet;
  * </ul>
  */
 public abstract class ValueSet extends LimitedSizeLongSet implements Serializable, Cloneable {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20020122L;
 
   protected ValueSet(int max_values) {
@@ -253,8 +250,12 @@ public abstract class ValueSet extends LimitedSizeLongSet implements Serializabl
         }
       }
       elem_cnt += val.length;
-      if (val.length > 1) nonsingleton_arr_cnt++;
-      if (val.length > max_length) max_length = val.length;
+      if (val.length > 1) {
+        nonsingleton_arr_cnt++;
+      }
+      if (val.length > max_length) {
+        max_length = val.length;
+      }
       add(Arrays.hashCode((long[]) v1));
     }
 
@@ -331,8 +332,12 @@ public abstract class ValueSet extends LimitedSizeLongSet implements Serializabl
         }
       }
       elem_cnt += val.length;
-      if (val.length > 1) nonsingleton_arr_cnt++;
-      if (val.length > max_length) max_length = val.length;
+      if (val.length > 1) {
+        nonsingleton_arr_cnt++;
+      }
+      if (val.length > max_length) {
+        max_length = val.length;
+      }
       add(Arrays.hashCode(val));
     }
 
@@ -431,7 +436,9 @@ public abstract class ValueSet extends LimitedSizeLongSet implements Serializabl
       assert v1 != null;
       String[] val = (String[]) v1;
       elem_cnt += val.length;
-      if (val.length > 1) nonsingleton_arr_cnt++;
+      if (val.length > 1) {
+        nonsingleton_arr_cnt++;
+      }
       add(Arrays.deepHashCode(val));
     }
 

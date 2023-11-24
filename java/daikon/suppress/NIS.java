@@ -164,20 +164,28 @@ public class NIS {
 
   /** Whether or not to keep statistics. */
   public static boolean keep_stats = false;
+
   /** Number of falsified invariants in the program point. */
   public static int false_cnts = 0;
+
   /** Number of falsified invariants in the program point that are potential suppressors. */
   public static int false_invs = 0;
+
   /** Number of suppressions processed. */
   public static int suppressions_processed = 0;
+
   /** Number of suppressions processed by the falsified method. */
   public static int suppressions_processed_falsified = 0;
+
   /** Number of invariants that are no longer suppressed by a suppression. */
   static int new_invs_cnt = 0;
+
   /** Number of new_invs_cnt that are falsified by the sample. */
   public static int false_invs_cnt = 0;
+
   /** Number of invariants actually created. */
   public static int created_invs_cnt = 0;
+
   /** Number of invariants that are still suppressed. */
   static int still_suppressed_cnt = 0;
 
@@ -285,7 +293,9 @@ public class NIS {
     }
     // }
 
-    if (Debug.logDetail() && debug.isLoggable(Level.FINE)) dump(debug);
+    if (Debug.logDetail() && debug.isLoggable(Level.FINE)) {
+      dump(debug);
+    }
   }
 
   /**
@@ -411,7 +421,9 @@ public class NIS {
         inv.log("%s added to slice", inv.format());
       }
 
-      if (NIS.antecedent_method) created_invs_cnt++;
+      if (NIS.antecedent_method) {
+        created_invs_cnt++;
+      }
     }
 
     // Make a second pass through the new invariants and make sure that
@@ -652,7 +664,9 @@ public class NIS {
     // possibly create any newly unsuppressed invariants
     for (Iterator<Antecedents> i = comp_ants.values().iterator(); i.hasNext(); ) {
       Antecedents ants = i.next();
-      if (ants.false_cnt == 0) i.remove();
+      if (ants.false_cnt == 0) {
+        i.remove();
+      }
     }
     if (debugAnt.isLoggable(Level.FINE)) {
       for (Antecedents ants : comp_ants.values()) {
@@ -776,7 +790,9 @@ public class NIS {
     for (SupInv supinv : suppressed_invs) {
       Invariant inv = supinv.instantiate(ppt);
       if (inv != null) {
-        if (Debug.dkconfig_internal_check) assert inv.ppt.find_inv_exact(inv) == null;
+        if (Debug.dkconfig_internal_check) {
+          assert inv.ppt.find_inv_exact(inv) == null;
+        }
         inv.ppt.addInvariant(inv);
         created_invs.add(inv);
       }
@@ -847,7 +863,9 @@ public class NIS {
         if (!is_suppressor(inv.getClass())) {
           continue;
         }
-        if (inv.is_false()) false_cnt++;
+        if (inv.is_false()) {
+          false_cnt++;
+        }
         List<Invariant> antecedents =
             antecedent_map.computeIfAbsent(inv.getClass(), __ -> new ArrayList<Invariant>());
         antecedents.add(inv);
@@ -920,12 +938,16 @@ public class NIS {
       this.suppressee = suppressee;
       this.vis = vis;
       this.ppt = ppt;
-      if (Debug.logOn()) log("Created " + suppressee);
+      if (Debug.logOn()) {
+        log("Created " + suppressee);
+      }
     }
 
     /** Track Log the specified message. */
     public void log(@UnknownInitialization(SupInv.class) SupInv this, String message) {
-      if (Debug.logOn()) Debug.log(suppressee.sup_class, ppt, vis, message);
+      if (Debug.logOn()) {
+        Debug.log(suppressee.sup_class, ppt, vis, message);
+      }
     }
 
     /** Equal iff classes / swap variable / and variables match exactly. */

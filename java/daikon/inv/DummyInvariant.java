@@ -8,6 +8,7 @@ import daikon.PptTopLevel;
 import daikon.VarInfo;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.dataflow.qual.SideEffectFree;
@@ -32,9 +33,6 @@ import typequals.prototype.qual.Prototype;
  * supplied in the splitter info file.
  */
 public class DummyInvariant extends Invariant {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20030220L;
 
   private @Nullable String daikonFormat;
@@ -110,7 +108,7 @@ public class DummyInvariant extends Invariant {
             dbcFormat,
             csharpFormat,
             // Not valid until we find a slice for it
-            /*valid=*/ false);
+            /* valid= */ false);
 
     // Find between 1 and 3 unique variables, to pick a slice to put
     // this in.
@@ -119,7 +117,9 @@ public class DummyInvariant extends Invariant {
       uniqVarsSet.add(vars[i].canonicalRep());
     }
     int sliceSize = uniqVarsSet.size();
-    if (sliceSize > 3) sliceSize = 3;
+    if (sliceSize > 3) {
+      sliceSize = 3;
+    }
     /*NNC:@MonotonicNonNull*/ VarInfo[] newVars = new VarInfo[sliceSize];
     {
       Iterator<VarInfo> it = uniqVarsSet.iterator();
@@ -328,5 +328,11 @@ public class DummyInvariant extends Invariant {
   protected @NonPrototype DummyInvariant instantiate_dyn(
       @Prototype DummyInvariant this, PptSlice slice) {
     throw new Error("do not invoke " + getClass() + ".instantiate_dyn()");
+  }
+
+  @Override
+  public @Nullable @NonPrototype DummyInvariant merge(
+      @Prototype DummyInvariant this, List<@NonPrototype Invariant> invs, PptSlice parent_ppt) {
+    throw new Error("Don't merge DummyInvariant invariants");
   }
 }

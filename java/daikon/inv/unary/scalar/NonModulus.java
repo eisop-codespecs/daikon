@@ -5,13 +5,17 @@ import daikon.VarInfo;
 import daikon.inv.Invariant;
 import daikon.inv.InvariantStatus;
 import daikon.inv.OutputFormat;
+import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.plumelib.util.Intern;
 import org.plumelib.util.MathPlume;
+import typequals.prototype.qual.NonPrototype;
 import typequals.prototype.qual.Prototype;
 
 /**
@@ -21,9 +25,6 @@ import typequals.prototype.qual.Prototype;
  * remainder and {@code m} is the modulus.
  */
 public class NonModulus extends SingleScalar {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20020122L;
 
   // Variables starting with dkconfig_ should only be set via the
@@ -61,7 +62,6 @@ public class NonModulus extends SingleScalar {
     return proto;
   }
 
-  /** NonModulus is only valid on integral types. */
   @Override
   public boolean instantiate_ok(VarInfo[] vis) {
 
@@ -72,13 +72,11 @@ public class NonModulus extends SingleScalar {
     return vis[0].file_rep_type.baseIsIntegral();
   }
 
-  /** Returns whether or not this invariant is enabled. */
   @Override
   public boolean enabled() {
     return dkconfig_enabled;
   }
 
-  /** instantiate an invariant on the specified slice */
   @Override
   protected NonModulus instantiate_dyn(@Prototype NonModulus this, PptSlice slice) {
     return new NonModulus(slice);
@@ -235,5 +233,22 @@ public class NonModulus extends SingleScalar {
     }
 
     return false;
+  }
+
+  @Override
+  public @Nullable @NonPrototype NonModulus merge(
+      @Prototype NonModulus this, List<@NonPrototype Invariant> invs, PptSlice parent_ppt) {
+    @SuppressWarnings("nullness") // super.merge does not return null
+    @NonNull NonModulus result = (NonModulus) super.merge(invs, parent_ppt);
+    for (Invariant inv : invs) {
+      NonModulus r = (NonModulus) inv;
+      if (result.modulus != r.modulus
+          || result.remainder != r.remainder
+          || result.no_result_yet != r.no_result_yet
+          || result.results_accurate != r.results_accurate) {
+        return null;
+      }
+    }
+    return result;
   }
 }

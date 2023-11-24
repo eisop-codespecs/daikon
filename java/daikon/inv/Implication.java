@@ -5,6 +5,7 @@ import daikon.PptTopLevel;
 import daikon.VarInfo;
 import daikon.split.PptSplitter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.checkerframework.checker.formatter.qual.FormatMethod;
@@ -25,9 +26,6 @@ import typequals.prototype.qual.Prototype;
  * only true when certain other conditions are also true (splitting).
  */
 public class Implication extends Joiner {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20030822L;
 
   // orig_left and orig_right are the original invariants, in the original
@@ -37,6 +35,7 @@ public class Implication extends Joiner {
   // and orig_right is used in isObvious*.
   /** The original predicate invariant from its original conditional ppt. */
   private Invariant orig_left;
+
   /**
    * The original consequent invariant from its original conditional ppt. Or, right itself if right
    * is a DummyInvariant from a splitter file.
@@ -337,5 +336,11 @@ public class Implication extends Joiner {
   @Override
   protected @NonPrototype Invariant instantiate_dyn(@Prototype Implication this, PptSlice slice) {
     throw new Error("do not invoke " + getClass() + ".instantiate_dyn()");
+  }
+
+  @Override
+  public @Nullable @NonPrototype Implication merge(
+      @Prototype Implication this, List<@NonPrototype Invariant> invs, PptSlice parent_ppt) {
+    throw new Error("do not merge implications");
   }
 }

@@ -1,6 +1,7 @@
 package daikon;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 import java.util.logging.Logger;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 import org.checkerframework.checker.interning.qual.Interned;
@@ -42,20 +43,25 @@ public final class ValueTuple implements Cloneable {
   // Right now there are only three meaningful values for a mod:
   /** Not modified. */
   public static final int UNMODIFIED = 0;
+
   /** Modified. */
   public static final int MODIFIED = 1;
+
   /**
    * Missing value because the expression doesn't make sense: x.a when x is null. Data trace files
    * can contain this modbit.
    */
   public static final int MISSING_NONSENSICAL = 2;
+
   /**
    * Missing value because of data flow: this.x.x isn't available from a ppt. Data trace files must
    * not contain this modbit.
    */
   public static final int MISSING_FLOW = 3;
+
   /** Maximum mod bit value. Always set to 1+ last modbit value. */
   public static final int MODBIT_VALUES = 4;
+
   /**
    * Out of the range of MODBIT_VALUES because this won't appear in the tables; it gets converted to
    * UNMODIFIED or MODIFIED, depending on whether this is the first sample. (Not sure whether that
@@ -218,10 +224,18 @@ public final class ValueTuple implements Cloneable {
   static int make_tuplemod(
       boolean unmodified, boolean modified, boolean missingNonsensical, boolean missingFlow) {
     int result = 0;
-    if (unmodified) result += UNMODIFIED_BITVAL;
-    if (modified) result += MODIFIED_BITVAL;
-    if (missingNonsensical) result += MISSING_NONSENSICAL_BITVAL;
-    if (missingFlow) result += MISSING_FLOW_BITVAL;
+    if (unmodified) {
+      result += UNMODIFIED_BITVAL;
+    }
+    if (modified) {
+      result += MODIFIED_BITVAL;
+    }
+    if (missingNonsensical) {
+      result += MISSING_NONSENSICAL_BITVAL;
+    }
+    if (missingFlow) {
+      result += MISSING_FLOW_BITVAL;
+    }
     return result;
   }
 
@@ -438,7 +452,9 @@ public final class ValueTuple implements Cloneable {
     assert vals.length == mods.length;
     assert vis == null || vals.length == vis.length;
     for (int i = 0; i < vals.length; i++) {
-      if (i > 0) sb.append("; ");
+      if (i > 0) {
+        sb.append("; ");
+      }
       if (vis != null) {
         sb.append(vis[i].name() + "=");
       }
@@ -481,13 +497,11 @@ public final class ValueTuple implements Cloneable {
   }
 
   public static String valsToString(@Nullable Object[] vals) {
-    StringBuilder sb = new StringBuilder("[");
+    StringJoiner sj = new StringJoiner(", ", "[", "]");
     for (int i = 0; i < vals.length; i++) {
-      if (i > 0) sb.append(", ");
-      sb.append(valToString(vals[i]));
+      sj.add(valToString(vals[i]));
     }
-    sb.append("]");
-    return sb.toString();
+    return sj.toString();
   }
 
   public static String valToString(@Nullable Object val) {

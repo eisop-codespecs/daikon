@@ -18,9 +18,6 @@ import typequals.prototype.qual.Prototype;
  * general invariant LowerBound).
  */
 public class Positive extends SingleScalar {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20040728L;
 
   // Variables starting with dkconfig_ should only be set via the
@@ -47,19 +44,16 @@ public class Positive extends SingleScalar {
     return proto;
   }
 
-  /** returns whether or not this invariant is enabled */
   @Override
   public boolean enabled() {
     return dkconfig_enabled;
   }
 
-  /** instantiate an invariant on the specified slice */
   @Override
   public Positive instantiate_dyn(@Prototype Positive this, PptSlice slice) {
     return new Positive(slice);
   }
 
-  // A printed representation for user output
   @SideEffectFree
   @Override
   public String format_using(@GuardSatisfied Positive this, OutputFormat format) {

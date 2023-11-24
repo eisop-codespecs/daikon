@@ -44,9 +44,6 @@ import typequals.prototype.qual.Prototype;
  * {@code x[] is the reverse of y[]}.
  */
 public class CLASSNAME extends SUPERCLASS {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20030822L;
 
   public static final Logger debug =
@@ -67,12 +64,11 @@ public class CLASSNAME extends SUPERCLASS {
 
   private static @Prototype CLASSNAME proto = new @Prototype CLASSNAME();
 
-  /** Returns the prototype invariant for CLASSNAME */
+  /** Returns the prototype invariant for CLASSNAME. */
   public static @Prototype CLASSNAME get_proto() {
     return proto;
   }
 
-  /** returns whether or not this invariant is enabled */
   @Override
   public boolean enabled() {
     return dkconfig_enabled;
@@ -94,7 +90,6 @@ public class CLASSNAME extends SUPERCLASS {
     return true;
   }
 
-  /** instantiates the invariant on the specified slice */
   @Override
   public CLASSNAME instantiate_dyn(@Prototype CLASSNAME this, PptSlice slice) {
     return new CLASSNAME(slice);

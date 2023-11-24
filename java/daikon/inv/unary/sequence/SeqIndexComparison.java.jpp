@@ -173,9 +173,6 @@ import typequals.prototype.qual.Prototype;
  * sequence and the element itself. Prints as {@code x[i] EQUALScode i}.
  */
 public class CLASSNAME extends SUPERCLASS {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20040203L;
 
   /** Debug tracer. */
@@ -204,13 +201,11 @@ public class CLASSNAME extends SUPERCLASS {
     return proto;
   }
 
-  /** returns whether or not we are enabled */
   @Override
   public boolean enabled() {
     return dkconfig_enabled && !dkconfig_SeqIndexDisableAll;
   }
 
-  /** Check that SeqIndex comparisons make sense over these vars. */
   @Override
   public boolean instantiate_ok(VarInfo[] vis) {
 
@@ -236,7 +231,6 @@ public class CLASSNAME extends SUPERCLASS {
     return true;
   }
 
-  /** Instantiate the invariant on the specified slice. */
   @Override
   public CLASSNAME instantiate_dyn(@Prototype CLASSNAME this, PptSlice slice) {
     return new CLASSNAME(slice);

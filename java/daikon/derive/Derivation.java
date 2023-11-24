@@ -19,9 +19,6 @@ import org.checkerframework.dataflow.qual.SideEffectFree;
  * value. Derivations are created by DerivationFactory.
  */
 public abstract class Derivation implements Serializable, Cloneable {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20020122L;
 
   // This definition is here so that it will show up in the manual
@@ -118,6 +115,7 @@ public abstract class Derivation implements Serializable, Cloneable {
   protected abstract boolean isParam();
 
   public boolean missing_array_bounds = false;
+
   /**
    * True if we have encountered to date any missing values in this derivation due to array indices
    * being out of bounds. This can happen with both simple subscripts and subsequences. Note that
@@ -262,7 +260,9 @@ public abstract class Derivation implements Serializable, Cloneable {
    */
   protected String shift_str(int shift) {
     String shift_str = "";
-    if (shift != 0) shift_str = String.format("%+d", shift);
+    if (shift != 0) {
+      shift_str = String.format("%+d", shift);
+    }
     return shift_str;
   }
 

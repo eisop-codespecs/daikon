@@ -8,9 +8,6 @@ import typequals.prototype.qual.Prototype;
 
 /** Exists simply to provide the do-nothing resusurrect_done method and abstract add method. */
 public abstract class UnaryInvariant extends Invariant {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20020122L;
 
   protected UnaryInvariant(PptSlice ppt) {
@@ -21,11 +18,6 @@ public abstract class UnaryInvariant extends Invariant {
     super();
   }
 
-  /**
-   * Returns this.
-   *
-   * @return this
-   */
   @Override
   protected Invariant resurrect_done(int[] permutation) {
     assert permutation.length == 1;

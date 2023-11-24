@@ -20,9 +20,6 @@ import typequals.prototype.qual.Prototype;
  * (tab).
  */
 public final class PrintableString extends SingleString {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20061016L;
 
   /** Boolean. True iff PrintableString invariants should be considered. */
@@ -43,13 +40,11 @@ public final class PrintableString extends SingleString {
     return proto;
   }
 
-  /** returns whether or not this invariant is enabled */
   @Override
   public boolean enabled() {
     return dkconfig_enabled;
   }
 
-  /** instantiate an invariant on the specified slice */
   @Override
   public PrintableString instantiate_dyn(@Prototype PrintableString this, PptSlice slice) {
     return new PrintableString(slice);
@@ -66,13 +61,13 @@ public final class PrintableString extends SingleString {
     }
   }
 
-  /** Check to see if a only contains printable ascii characters. */
+  /** Check to see if a only contains printable ASCII characters. */
   @Override
   public InvariantStatus add_modified(@Interned String a, int count) {
     return check_modified(a, count);
   }
 
-  /** Check to see if a only contains printable ascii characters. */
+  /** Check to see if a only contains printable ASCII characters. */
   @Override
   public InvariantStatus check_modified(@Interned String a, int count) {
     for (int ii = 0; ii < a.length(); ii++) {

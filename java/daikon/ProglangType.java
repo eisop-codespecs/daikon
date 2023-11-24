@@ -13,7 +13,6 @@ import java.util.List;
 import org.checkerframework.checker.interning.qual.Interned;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.checker.signedness.qual.Signed;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
 import org.plumelib.util.Intern;
@@ -45,9 +44,6 @@ import org.plumelib.util.StringsPlume;
 // known_types = integral_types + ("pointer", "address")
 
 public final @Interned class ProglangType implements Serializable {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20020122L;
 
   /** Maps from a base type name to its ProglangTypes and arrays with that base. */
@@ -529,11 +525,7 @@ public final @Interned class ProglangType implements Serializable {
                 "Warning: at %s line %d%n"
                     + "  bad ttype %c [int=%d] while parsing %s%n"
                     + "  Proceeding with value 'null'%n",
-                filename,
-                reader.getLineNumber(),
-                (@Signed char) parser.ttype,
-                parser.ttype,
-                value_orig);
+                filename, reader.getLineNumber(), (char) parser.ttype, parser.ttype, value_orig);
             v.add(null);
           }
         }
@@ -571,9 +563,12 @@ public final @Interned class ProglangType implements Serializable {
       for (int i = 0; i < len; i++) {
         if (value_strings[i].equals("nonsensical")) {
           return null;
-        } else if (value_strings[i].equals("null")) result[i] = 0;
-        else if (value_strings[i].equalsIgnoreCase("NaN")) result[i] = Double.NaN;
-        else if (value_strings[i].equalsIgnoreCase("Infinity") || value_strings[i].equals("inf")) {
+        } else if (value_strings[i].equals("null")) {
+          result[i] = 0;
+        } else if (value_strings[i].equalsIgnoreCase("NaN")) {
+          result[i] = Double.NaN;
+        } else if (value_strings[i].equalsIgnoreCase("Infinity")
+            || value_strings[i].equals("inf")) {
           result[i] = Double.POSITIVE_INFINITY;
         } else if (value_strings[i].equalsIgnoreCase("-Infinity")
             || value_strings[i].equals("-inf")) {
@@ -772,8 +767,9 @@ public final @Interned class ProglangType implements Serializable {
    * but not the other way around. This is a transitive method, but not reflexive.
    */
   public boolean comparableOrSuperclassOf(ProglangType other) {
-    if (this == other) // ProglangType objects are interned
-    return true;
+    if (this == other) { // ProglangType objects are interned
+      return true;
+    }
     if (this.dimensions != other.dimensions) {
       return false;
     }
@@ -783,8 +779,9 @@ public final @Interned class ProglangType implements Serializable {
       return true;
     }
     // Make Object castable to everything, except booleans
-    if ((this.base == BASE_OBJECT) && other.baseIsObject()) // interned strings
-    return true;
+    if ((this.base == BASE_OBJECT) && other.baseIsObject()) { // interned strings
+      return true;
+    }
 
     return false;
   }

@@ -182,6 +182,7 @@ class FormatTestCase {
       return "";
     }
   }
+
   // End of SingleOutputTestCase
 
   /** Prefix to each goal line in the file for identitication. */
@@ -242,7 +243,9 @@ class FormatTestCase {
               + current.getFormatString()
               + "): "
               + current.createTestOutput(invariantToTest));
-      if (i != testCases.size() - 1) output.append(lineSep);
+      if (i != testCases.size() - 1) {
+        output.append(lineSep);
+      }
       currentLine = currentGoalLineNumber;
     }
 
@@ -280,7 +283,9 @@ class FormatTestCase {
       result.append(currentDiffString);
       // interned if the empty string, but use .equals to avoid an
       // Interning Checker warning
-      if (i != testCases.size() && !currentDiffString.equals("")) result.append(lineSep + lineSep);
+      if (i != testCases.size() && !currentDiffString.equals("")) {
+        result.append(lineSep + lineSep);
+      }
     }
 
     return result.toString();
@@ -431,7 +436,9 @@ class FormatTestCase {
     // If generating goals get the formats from the list of formats
     if (!generateGoals) {
       goalOutput = parseGoal(getNextRealLine(commands));
-      if (goalOutput == null) throw new RuntimeException("Bad format of goal data");
+      if (goalOutput == null) {
+        throw new RuntimeException("Bad format of goal data");
+      }
     } else {
       formatStrings = InvariantFormatTester.TEST_FORMAT_LIST.iterator();
     }
@@ -611,7 +618,6 @@ class FormatTestCase {
     // - The ProglangType will be specified in the parameters
     // - The comparability will be none
     VarInfo result;
-    @SuppressWarnings("signedness:cast.unsafe") // `i` is small enough to prevent overflow
     String base_name = new String(new char[] {(char) ('a' + i)});
     String name = base_name + arrayModifier;
     if (FileIO.new_decl_format) {

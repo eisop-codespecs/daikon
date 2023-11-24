@@ -236,9 +236,6 @@ import typequals.prototype.qual.Prototype;
  * {@code x[1]} to {@code y[1]}, and so forth. Prints as {@code x[] EQUALScode y[]}.
  */
 public class PAIRWISEINTEQUAL extends SUPERCLASS {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20030822L;
 
   /** Debug tracer. */
@@ -262,18 +259,16 @@ public class PAIRWISEINTEQUAL extends SUPERCLASS {
 
   private static @Prototype PAIRWISEINTEQUAL proto = new @Prototype PAIRWISEINTEQUAL();
 
-  /** Returns the prototype invariant for PAIRWISEINTEQUAL */
+  /** Returns the prototype invariant for PAIRWISEINTEQUAL. */
   public static @Prototype PAIRWISEINTEQUAL get_proto() {
     return proto;
   }
 
-  /** Returns whether or not this invariant is enabled. */
   @Override
   public boolean enabled() {
     return dkconfig_enabled;
   }
 
-  /** PAIRWISEINTEQUAL is only valid on integral types. */
   @Override
   public boolean instantiate_ok(VarInfo[] vis) {
 
@@ -290,7 +285,6 @@ public class PAIRWISEINTEQUAL extends SUPERCLASS {
     return true;
   }
 
-  /** instantiates the invariant on the specified slice */
   @Override
   protected PAIRWISEINTEQUAL instantiate_dyn(@Prototype PAIRWISEINTEQUAL this, PptSlice slice) {
     PAIRWISEINTEQUAL inv = new PAIRWISEINTEQUAL(slice);

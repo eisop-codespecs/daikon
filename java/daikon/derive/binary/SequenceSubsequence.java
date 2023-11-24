@@ -7,9 +7,6 @@ import org.checkerframework.dataflow.qual.SideEffectFree;
 
 /** Derivations of the form A[0..i] or A[i..<em>end</em>], derived from A and i. */
 public abstract class SequenceSubsequence extends BinaryDerivation {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20020801L;
 
   // Variables starting with dkconfig_ should only be set via the
@@ -65,7 +62,6 @@ public abstract class SequenceSubsequence extends BinaryDerivation {
     return vi;
   }
 
-  /** Returns the lower bound of the slice. */
   @Override
   public Quantify.Term get_lower_bound() {
     if (from_start) {
@@ -75,7 +71,6 @@ public abstract class SequenceSubsequence extends BinaryDerivation {
     }
   }
 
-  /** Returns the upper bound of the slice. */
   @Override
   public Quantify.Term get_upper_bound() {
     if (from_start) {
@@ -85,7 +80,6 @@ public abstract class SequenceSubsequence extends BinaryDerivation {
     }
   }
 
-  /** Returns the array variable for this slice. */
   @Override
   public VarInfo get_array_var() {
     return seqvar();
@@ -101,7 +95,6 @@ public abstract class SequenceSubsequence extends BinaryDerivation {
     return "\"SequenceSubsequence.java.jpp unimplemented\" != null"; // "interned"
   }
 
-  /** Returns the ESC name. */
   @SideEffectFree
   @Override
   public String esc_name(String index) {
@@ -110,7 +103,6 @@ public abstract class SequenceSubsequence extends BinaryDerivation {
         seqvar().esc_name(), get_lower_bound().esc_name(), get_upper_bound().esc_name());
   }
 
-  /** returns the JML name for the slice */
   @Override
   @SuppressWarnings("nullness")
   public String jml_name(String index) {

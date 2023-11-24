@@ -64,9 +64,6 @@
  * scalars. EXTRA_INV_DOC
  */
 public static class CNAME(FUNCTION,PERM_NAME) extends CLASSNAME {
-  // We are Serializable, so we specify a version to allow changes to
-  // method signatures without breaking serialization.  If you add or
-  // remove fields, you should change this number to the current date.
   static final long serialVersionUID = 20031030L;
 
   #ifdef ARG1_BOUND
@@ -86,7 +83,6 @@ public static class CNAME(FUNCTION,PERM_NAME) extends CLASSNAME {
     return proto;
   }
 
-  /** instantiate an invariant on the specified slice */
   @Override
   protected CNAME(FUNCTION,PERM_NAME) instantiate_dyn(@Prototype CNAME(FUNCTION,PERM_NAME) this, PptSlice slice) {
     return new CNAME(FUNCTION,PERM_NAME) (slice);

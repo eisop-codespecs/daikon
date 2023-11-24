@@ -26,6 +26,7 @@ class ArrayFixer extends DepthFirstVisitor {
 
   private int columnshift = 0;
   private int columnshiftline = -1;
+
   // column shifting only applies to a single line, then is turned off again.
   // States for the variables:
   // columnshift == 0, columnshiftline == -1:
@@ -38,6 +39,7 @@ class ArrayFixer extends DepthFirstVisitor {
 
   /** All possible varInfos for the variables in the conditions. */
   private VarInfo[] varInfos;
+
   // varNames and varInfo must be the same length and be in the same order.
 
   /**
@@ -105,7 +107,7 @@ class ArrayFixer extends DepthFirstVisitor {
 
   /**
    * This method should not be directly used by users of this class; however, must be public by to
-   * full-fill Visitor interface. Adds "_identity" or "_array" if needed at this node token.
+   * fulfill Visitor interface. Adds "_identity" or "_array" if needed at this node token.
    */
   @Override
   public void visit(NodeToken n) {
