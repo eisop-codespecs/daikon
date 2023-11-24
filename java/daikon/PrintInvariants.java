@@ -301,10 +301,7 @@ public final class PrintInvariants {
 
   /** See the documentation for this class. */
   public static void main(final String[] args)
-      throws FileNotFoundException,
-          StreamCorruptedException,
-          OptionalDataException,
-          IOException,
+      throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
           ClassNotFoundException {
     try {
       mainHelper(args);
@@ -320,10 +317,7 @@ public final class PrintInvariants {
    * appropriate to be called progrmmatically.
    */
   public static void mainHelper(String[] args)
-      throws FileNotFoundException,
-          StreamCorruptedException,
-          OptionalDataException,
-          IOException,
+      throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
           ClassNotFoundException {
 
     LongOpt[] longopts =

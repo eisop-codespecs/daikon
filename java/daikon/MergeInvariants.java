@@ -62,10 +62,7 @@ public final class MergeInvariants {
           "      Specify an output inv file.  If not specified, the results are printed");
 
   public static void main(final String[] args)
-      throws FileNotFoundException,
-          StreamCorruptedException,
-          OptionalDataException,
-          IOException,
+      throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
           ClassNotFoundException {
     try {
       mainHelper(args);
@@ -87,10 +84,7 @@ public final class MergeInvariants {
    */
   @SuppressWarnings("nullness:contracts.precondition") // private field
   public static void mainHelper(String[] args)
-      throws FileNotFoundException,
-          StreamCorruptedException,
-          OptionalDataException,
-          IOException,
+      throws FileNotFoundException, StreamCorruptedException, OptionalDataException, IOException,
           ClassNotFoundException {
 
     daikon.LogHelper.setupLogs(INFO);
@@ -198,8 +192,9 @@ public final class MergeInvariants {
     // Make sure at least two files were specified
     if (inv_files.size() < 2) {
       throw new Daikon.UserError(
-          "Must specify at least two inv files; only specified "
-              + StringsPlume.nplural(inv_files.size(), "file"));
+          "Provided "
+              + StringsPlume.nplural(inv_files.size(), "inv file")
+              + " but needs at least two");
     }
 
     // Setup the default for guarding
