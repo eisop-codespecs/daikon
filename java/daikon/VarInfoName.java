@@ -1631,6 +1631,8 @@ public abstract @Interned class VarInfoName implements Serializable, Comparable<
   /**
    * Returns a name for a the prestate value of this object; form is like "orig(this)" or
    * "\old(this)".
+   *
+   * @return a name for the prestate value of this object
    */
   public VarInfoName applyPrestate(@Interned VarInfoName this) {
     if (this instanceof Poststate) {
@@ -2052,6 +2054,9 @@ public abstract @Interned class VarInfoName implements Serializable, Comparable<
   /**
    * Caller is subscripting an orig(a[]) array. Take the requested index and make it useful in that
    * context.
+   *
+   * @param index an index into an orig array
+   * @return a name for the indexed orig item
    */
   static VarInfoName indexToPrestate(VarInfoName index) {
     // 1 orig(a[]) . orig(index) -> orig(a[index])
@@ -3613,12 +3618,13 @@ public abstract @Interned class VarInfoName implements Serializable, Comparable<
     }
 
     // <root*> -> <string string*>
-    /**
-     * Given a list of roots, return a String array where the first element is a JML-style
-     * quantification over newly-introduced bound variables, the last element is a closer, and the
-     * other elements are jml-named strings for the provided roots (with sequenced subscripted by
-     * one of the new bound variables).
-     */
+    // /**
+    //  * Given a list of roots, return a String array where the first element is a JML-style
+    //  * quantification over newly-introduced bound variables, the last element is a closer, and
+    // the
+    //  * other elements are jml-named strings for the provided roots (with sequenced subscripted by
+    //  * one of the new bound variables).
+    //  */
     // public static String[] format_jml(VarInfoName[] roots) {
     //   return format_jml(roots, false);
     // }
@@ -3773,7 +3779,7 @@ public abstract @Interned class VarInfoName implements Serializable, Comparable<
     //       return result;
     //     }
 
-    //////////////////////////
+    // //////////////////////////
 
     public static String[] simplifyNameAndBounds(VarInfoName name) {
       String[] results = new String[3];

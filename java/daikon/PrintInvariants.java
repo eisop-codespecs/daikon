@@ -1339,16 +1339,13 @@ public final class PrintInvariants {
   /**
    * Takes a list of Invariants and returns a list of Invariants that is sorted according to
    * PptTopLevel.icfp.
+   *
+   * @param invs a list of Invariants
+   * @return a sorted list of the Invariants
    */
   public static List<Invariant> sort_invariant_list(List<Invariant> invs) {
-    Invariant[] invs_array = invs.toArray(new Invariant[invs.size()]);
-    Arrays.sort(invs_array, PptTopLevel.icfp);
-
-    List<Invariant> result = new ArrayList<>(invs_array.length);
-
-    for (int i = 0; i < invs_array.length; i++) {
-      result.add(invs_array[i]);
-    }
+    List<Invariant> result = new ArrayList<>(invs);
+    result.sort(PptTopLevel.icfp);
     return result;
   }
 
@@ -1399,7 +1396,7 @@ public final class PrintInvariants {
       ppt.debug_unary_info(debugBound);
     }
 
-    Invariant[] invs_array = invs_vector.toArray(new Invariant[invs_vector.size()]);
+    Invariant[] invs_array = invs_vector.toArray(new Invariant[0]);
     Arrays.sort(invs_array, PptTopLevel.icfp);
 
     Global.non_falsified_invariants += invs_array.length;
@@ -1637,7 +1634,7 @@ public final class PrintInvariants {
     boolean print_invs = false;
 
     List<Invariant> invs_vector = new ArrayList<>(ppt.getInvariants());
-    Invariant[] invs_array = invs_vector.toArray(new Invariant[invs_vector.size()]);
+    Invariant[] invs_array = invs_vector.toArray(new Invariant[0]);
 
     // Not Map, because keys are nullable
     HashMap<@Nullable Class<? extends InvariantFilter>, Map<Class<? extends Invariant>, Integer>>

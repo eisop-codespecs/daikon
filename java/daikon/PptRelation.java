@@ -256,7 +256,7 @@ public class PptRelation implements Serializable {
       Equality e = (Equality) inv;
       debug.fine("-- processing equality set " + e);
       Set<VarInfo> eqset = e.getVars();
-      VarInfo[] varr = eqset.toArray(new VarInfo[eqset.size()]);
+      VarInfo[] varr = eqset.toArray(new VarInfo[0]);
 
       // Build each combination of variables in the equality set and produce
       // a pair for each.  Skip any variables that do not have corresponding
@@ -816,7 +816,7 @@ public class PptRelation implements Serializable {
       //                    ppt.ppt_name.isNumberedExitPoint());
 
       // Loop over each splitter
-      splitter_loop:
+      // splitter_loop:
       for (Iterator<PptSplitter> ii = ppt.splitters.iterator(); ii.hasNext(); ) {
         PptSplitter ppt_split = ii.next();
 
@@ -975,7 +975,7 @@ public class PptRelation implements Serializable {
       // System.out.printf("processing splitter %s%n", ppt.name());
 
       // Loop over each splitter
-      splitter_loop:
+      // splitter_loop:
       for (Iterator<PptSplitter> ii = ppt.splitters.iterator(); ii.hasNext(); ) {
         PptSplitter ppt_split = ii.next();
 

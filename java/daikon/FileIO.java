@@ -47,6 +47,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.StringJoiner;
@@ -80,8 +81,9 @@ public final class FileIO {
     throw new Error();
   }
 
-  /// Constants
+  // Constants
 
+  /** Introduces a declaration in a declaration file. */
   static final String declaration_header = "DECLARE";
 
   // Program point name tags
@@ -122,9 +124,10 @@ public final class FileIO {
   /** String used to identify global ppt names. */
   public static final String global_suffix = "GLOBAL";
 
+  /** The line separator. */
   private static final String lineSep = Global.lineSep;
 
-  /// Settings
+  // Settings
 
   // Variables starting with dkconfig_ should only be set via the
   // daikon.config.Configuration interface.
@@ -202,7 +205,7 @@ public final class FileIO {
    */
   public static boolean dkconfig_rm_stack_dups = false;
 
-  /// Variables
+  // Variables
 
   // This hashmap maps every program point to an array, which contains the
   // old values of all variables in scope the last time the program point
@@ -310,9 +313,9 @@ public final class FileIO {
     return result;
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Declaration files
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Declaration files
+  //
 
   /**
    * Returns a new PptMap containing declarations read from the files listed in the argument;
@@ -366,9 +369,9 @@ public final class FileIO {
     String ppt_name = need(state, scanner, "ppt name");
     ppt_name = user_mod_ppt_name(ppt_name);
 
-    /** Information that will populate the new program point. */
+    // Information that will populate the new program point.
     Map<String, VarDefinition> varmap = new LinkedHashMap<>();
-    /** The VarDefinition we are in the middle of reading, or null if we are not. */
+    // The VarDefinition we are in the middle of reading, or null if we are not.
     VarDefinition vardef = null;
     List<ParentRelation> ppt_parents = new ArrayList<>();
     EnumSet<PptFlags> ppt_flags = EnumSet.noneOf(PptFlags.class);
@@ -481,7 +484,7 @@ public final class FileIO {
       @Interned VarInfo vi = new VarInfo(vd);
       vi_list.add(vi);
     }
-    VarInfo[] vi_array = vi_list.toArray(new VarInfo[vi_list.size()]);
+    VarInfo[] vi_array = vi_list.toArray(new VarInfo[0]);
 
     // Check to see if the program point is new
     if (state.all_ppts.containsName(ppt_name)) {
@@ -627,7 +630,7 @@ public final class FileIO {
       var_infos.add(vi);
     }
 
-    VarInfo[] result = var_infos.toArray(new VarInfo[var_infos.size()]);
+    VarInfo[] result = var_infos.toArray(new VarInfo[0]);
     return result;
   }
 
@@ -703,7 +706,7 @@ public final class FileIO {
           file,
           filename);
     }
-    /// XXX
+    // XXX
 
     int hash_position = proglang_type_string_and_aux.indexOf('#');
     String aux_string = "";
@@ -880,14 +883,19 @@ public final class FileIO {
     return result.toString();
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// invocation tracking for dtrace files entry/exit grouping
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // invocation tracking for dtrace files entry/exit grouping
+  //
 
+  /** Represents an instance/invocation of a program point. */
   static final class Invocation implements Comparable<Invocation> {
-    PptTopLevel ppt; // used in printing and in suppressing duplicates
-    // Rather than a valuetuple, place its elements here.
+    /** The program point; used in printing and in suppressing duplicates. */
+    PptTopLevel ppt;
+
+    /** The values. This array is used rather than a valuetuple. */
     @Nullable Object[] vals;
+
+    /** The modbits. */
     int[] mods;
 
     static Object canonical_hashcode = new Object();
@@ -1837,7 +1845,6 @@ public final class FileIO {
     }
 
     state.rtype = RecordType.EOF;
-    return;
   }
 
   /**
@@ -2441,9 +2448,9 @@ public final class FileIO {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Serialized PptMap files
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Serialized PptMap files
+  //
 
   /**
    * Use a special record type. Saving as one object allows for reference-sharing, easier saves and
@@ -2483,6 +2490,11 @@ public final class FileIO {
   /**
    * Read either a serialized PptMap or a InvMap and return a PptMap. If an InvMap is specified, it
    * is converted to a PptMap.
+   *
+   * @param file the input file
+   * @param use_saved_config flag
+   * @return a serialized PptMap
+   * @throws IOException if there is trouble reading the file
    */
   @EnsuresNonNull("FileIO.new_decl_format")
   public static PptMap read_serialized_pptmap(File file, boolean use_saved_config)
@@ -3075,7 +3087,7 @@ public final class FileIO {
 
     @Interned String str = need(state, scanner, descr);
     try {
-      E e = Enum.valueOf(enum_class, str.toUpperCase());
+      E e = Enum.valueOf(enum_class, str.toUpperCase(Locale.ENGLISH));
       return e;
     } catch (Exception exception) {
       @SuppressWarnings(
@@ -3083,7 +3095,7 @@ public final class FileIO {
       E @NonNull [] all = enum_class.getEnumConstants();
       StringJoiner msg = new StringJoiner(", ");
       for (E e : all) {
-        msg.add(String.format("'%s'", e.name().toLowerCase()));
+        msg.add(String.format("'%s'", e.name().toLowerCase(Locale.ENGLISH)));
       }
       decl_error(state, "'%s' found where %s expected", str, msg);
       throw new Error("execution cannot get to here, previous line threw an error");
@@ -3130,6 +3142,9 @@ public final class FileIO {
    * Handle any possible modifications to the ppt name. For now, just support the Applications
    * Communities specific modification to remove duplicate stack entries. But a more generic
    * technique could be implemented in the future.
+   *
+   * @param ppt_name a program point
+   * @return modified ppt name
    */
   public static String user_mod_ppt_name(String ppt_name) {
 
