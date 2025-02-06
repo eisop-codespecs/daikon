@@ -635,9 +635,9 @@ public class PptTopLevel extends Ppt {
     return views.size();
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Adding variables
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Adding variables
+  //
 
   /**
    * Appends the elements of vis to the var_infos array of this ppt. Method is not private so that
@@ -678,9 +678,9 @@ public class PptTopLevel extends Ppt {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Derived variables
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Derived variables
+  //
 
   // This is here because I think it doesn't make sense to derive except
   // from a PptTopLevel (and possibly a PptConditional?).  Perhaps move it
@@ -995,7 +995,7 @@ public class PptTopLevel extends Ppt {
       }
       Global.debugDerive.fine(derived_vars);
     }
-    Derivation[] result_array = result.toArray(new Derivation[result.size()]);
+    Derivation[] result_array = result.toArray(new Derivation[0]);
     return result_array;
   }
 
@@ -1203,7 +1203,7 @@ public class PptTopLevel extends Ppt {
       // Remove any falsified invariants.  Make a copy of the original slices
       // since NISuppressions will add new slices/invariants as others are
       // falsified.
-      PptSlice[] slices = views.values().toArray(new @Nullable PptSlice[views.values().size()]);
+      PptSlice[] slices = views.values().toArray(new @Nullable PptSlice[0]);
       for (int i = 0; i < slices.length; i++) {
         slices[i].remove_falsified();
       }
@@ -1523,7 +1523,7 @@ public class PptTopLevel extends Ppt {
       for (Derivation der : ders) {
         vis_list.add(der.getVarInfo());
       }
-      VarInfo[] vis = vis_list.toArray(new VarInfo[vis_list.size()]);
+      VarInfo[] vis = vis_list.toArray(new VarInfo[0]);
       if (Global.debugDerive.isLoggable(Level.FINE)) {
         for (int i = 0; i < ders.length; i++) {
           Global.debugDerive.fine("Derived " + vis[i].name());
@@ -1542,9 +1542,9 @@ public class PptTopLevel extends Ppt {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Creating invariants
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Creating invariants
+  //
 
   // I can't decide which loop it's more efficient to make the inner loop:
   // the loop over samples or the loop over slices.
@@ -2729,9 +2729,9 @@ public class PptTopLevel extends Ppt {
     return result;
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Creating conditioned views
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Creating conditioned views
+  //
 
   // This static region can't appear in PptConditional, lest it never get
   // called.  PptConditional isn't instantiated unless it needs to be, but
@@ -2829,9 +2829,9 @@ public class PptTopLevel extends Ppt {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Post processing after data trace files are read (but before printing)
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Post processing after data trace files are read (but before printing)
+  //
 
   /**
    * Two things: a) convert Equality invariants into normal IntEqual type for filtering, printing,
@@ -2882,7 +2882,7 @@ public class PptTopLevel extends Ppt {
       for (VarInfo vi : slice.var_infos) {
         newVis_list.add(vi.canonicalRep());
       }
-      VarInfo[] newVis = newVis_list.toArray(new VarInfo[newVis_list.size()]);
+      VarInfo[] newVis = newVis_list.toArray(new VarInfo[0]);
       PptSlice newSlice = slice.cloneAndPivot(newVis);
       if (slice != newSlice) {
         pivoted.add(newSlice);
@@ -2905,9 +2905,9 @@ public class PptTopLevel extends Ppt {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Locating implied (same) invariants via the Simplify theorem-prover
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Locating implied (same) invariants via the Simplify theorem-prover
+  //
 
   /**
    * Created upon first use, then saved. Do not eagerly initialize, because doing so runs Simplify
@@ -2990,7 +2990,7 @@ public class PptTopLevel extends Ppt {
           }
         }
       }
-      invs = printing.toArray(new Invariant[printing.size()]);
+      invs = printing.toArray(new Invariant[0]);
     }
 
     // For efficiency, bail if we don't have any invariants to mark as implied
@@ -3254,9 +3254,9 @@ public class PptTopLevel extends Ppt {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Parameter VarInfo processing
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Parameter VarInfo processing
+  //
 
   /** Cached VarInfos that are parameter variables. */
   @SuppressWarnings("serial")
@@ -3278,9 +3278,9 @@ public class PptTopLevel extends Ppt {
     return paramVars;
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  /// Printing invariants
-  ///
+  // ///////////////////////////////////////////////////////////////////////////
+  // Printing invariants
+  //
 
   /**
    * Return a List of all the invariants for the program point. Also consider using views_iterator()
@@ -3388,8 +3388,8 @@ public class PptTopLevel extends Ppt {
 
   static Comparator<PptSlice> arityVarnameComparator = new PptSlice.ArityVarnameComparator();
 
-  /////////////////////////////////////////////////////////////////////////////
-  ///// Invariant guarding
+  // /////////////////////////////////////////////////////////////////////////////
+  // Invariant guarding
 
   //   /** This function guards all of the invariants in a PptTopLevel */
   //   public void guardInvariants() {
@@ -3422,7 +3422,7 @@ public class PptTopLevel extends Ppt {
   public void processOmissions(boolean[] omitTypes) {
     // Avoid concurrent modification exceptions using arrays
     Collection<PptSlice> viewsAsCollection = viewsAsCollection();
-    PptSlice[] viewArray = viewsAsCollection.toArray(new PptSlice[viewsAsCollection.size()]);
+    PptSlice[] viewArray = viewsAsCollection.toArray(new PptSlice[0]);
     for (PptSlice currentView : viewArray) {
       currentView.processOmissions(omitTypes);
     }
@@ -3883,7 +3883,7 @@ public class PptTopLevel extends Ppt {
       }
       non_missing_leaders.add(l);
     }
-    VarInfo[] leaders = non_missing_leaders.toArray(new VarInfo[non_missing_leaders.size()]);
+    VarInfo[] leaders = non_missing_leaders.toArray(new VarInfo[0]);
 
     // Create any invariants in the children which are NI-suppressed and
     // remember the list for each child.  The same ppt can be a child

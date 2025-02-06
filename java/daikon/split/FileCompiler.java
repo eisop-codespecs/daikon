@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -89,7 +90,7 @@ public final class FileCompiler {
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   @SuppressWarnings("value") // no index checker list support
-  public FileCompiler(/*(at)MinLen(1)*/ ArrayList<String> compiler, @Positive long timeLimit) {
+  public FileCompiler(/*(at)MinLen(1)*/ List<String> compiler, @Positive long timeLimit) {
     this(compiler.toArray(new String[0]), timeLimit);
   }
 
@@ -162,8 +163,8 @@ public final class FileCompiler {
     cmdLine.addArguments(filenames.toArray(new String[0]));
 
     resultHandler = new DefaultExecuteResultHandler();
-    executor = new DefaultExecutor();
-    watchdog = new ExecuteWatchdog(timeLimit);
+    executor = DefaultExecutor.builder().get();
+    watchdog = ExecuteWatchdog.builder().setTimeout(Duration.ofMillis(timeLimit)).get();
     executor.setWatchdog(watchdog);
     outStream = new ByteArrayOutputStream();
     errStream = new ByteArrayOutputStream();

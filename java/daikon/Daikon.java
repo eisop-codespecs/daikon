@@ -223,10 +223,10 @@ public final class Daikon {
   public static int dkconfig_progress_delay = 1000;
 
   /** The current version of Daikon. */
-  public static final String release_version = "5.8.19";
+  public static final String release_version = "5.8.21";
 
   /** The date for the current version of Daikon. */
-  public static final String release_date = "June 24, 2023";
+  public static final String release_date = "May 14, 2024";
 
   /** A description of the Daikon release (version number, date, and URL). */
   public static final String release_string =
@@ -610,7 +610,7 @@ public final class Daikon {
       return "Error at line " + reader.getLineNumber() + " in file " + filename + ": " + msg;
     }
 
-    /// Constructors that take a Throwable
+    // Constructors that take a Throwable
 
     // Requires that e.getMessage() != null.
     public UserError(Throwable e) {
@@ -637,8 +637,9 @@ public final class Daikon {
       this(e, error_at_line_file(reader, filename, msg));
     }
 
-    /// Constructors that do not take a Throwable
+    // Constructors that do not take a Throwable
 
+    /** Creates a UserError with no details. */
     public UserError() {
       super("");
     }
@@ -707,11 +708,11 @@ public final class Daikon {
       System.err.println("Bug in Daikon.  Please report.");
       System.exit(2);
     } else {
-      // This caes should never be executed.
+      // This case should never be executed.
       System.err.println();
-      System.err.println("Bug in Daikon.  Please report.");
+      System.err.println("Unknown problem in Daikon.  Please report.");
       e.printStackTrace(System.err);
-      System.err.println("Bug in Daikon.  Please report.");
+      System.err.println("Unknown problem in Daikon.  Please report.");
       System.exit(2);
     }
   }
@@ -722,7 +723,10 @@ public final class Daikon {
    *
    * @param args the command-line arguments
    */
-  @SuppressWarnings("nullness:contracts.precondition") // private field
+  @SuppressWarnings({
+    "nullness:contracts.precondition", // private field
+    "SystemConsoleNull" // https://errorprone.info/bugpattern/SystemConsoleNull
+  })
   public static void mainHelper(final String[] args) {
     long startTime = System.nanoTime();
     long duration;
@@ -997,7 +1001,7 @@ public final class Daikon {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////////////////
   // Read in the command line options
   // Return {decls, dtrace, spinfo, map} files.
   static FileOptions read_options(String[] args, String usage) {
@@ -2056,7 +2060,7 @@ public final class Daikon {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////////////////
   // Read decls, dtrace, etc. files
 
   /**
@@ -2172,7 +2176,7 @@ public final class Daikon {
     Global.debugSplit.fine("<<exit>>  setup_splitters");
   }
 
-  ///////////////////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////////////////
   // Infer invariants over the trace data
 
   /**
