@@ -921,7 +921,10 @@ endif
 # command-line argument suppresses all type-checking errors.
 JAVAC_RESOURCELEAK_ARGS = -processor org.checkerframework.checker.resourceleak.ResourceLeakChecker -implicit:class -Xlint:-processing -AskipDefs='${ALLSYSTEMS_SKIPDEFS}' -ApermitStaticOwning -ApermitInitializationLeak
 JAVAC_FORMATTER_ARGS = -processor org.checkerframework.checker.formatter.FormatterChecker -implicit:class -Xlint:-processing -AskipDefs='${ALLSYSTEMS_SKIPDEFS}'
-JAVAC_INDEX_ARGS = -processor org.checkerframework.checker.index.IndexChecker -implicit:class -Xlint:-processing -AskipDefs='${INDEX_SKIPDEFS}' -AassumeAssertions=enabled -AsuppressWarnings="index"
+# -AwarnUnneededSuppressionsExceptions=value: the "value" @SuppressWarnings this
+# suppresses (FileCompiler's List-argument constructor) is still needed for other
+# checkers (e.g. Signedness) that don't blanket-suppress with -AsuppressWarnings="index".
+JAVAC_INDEX_ARGS = -processor org.checkerframework.checker.index.IndexChecker -implicit:class -Xlint:-processing -AskipDefs='${INDEX_SKIPDEFS}' -AassumeAssertions=enabled -AsuppressWarnings="index" -AwarnUnneededSuppressionsExceptions=value
 # JAVAC_INTERNING_ARGS = -processor org.checkerframework.checker.interning.InterningChecker -implicit:class -Xlint:-processing
 JAVAC_INTERNING_ARGS = -processor org.checkerframework.checker.interning.InterningChecker -Alint=-dotequals -implicit:class -Xlint:-processing -AskipDefs='${INTERNING_SKIPDEFS}'
 JAVAC_NULLNESS_ARGS = -processor org.checkerframework.checker.nullness.NullnessChecker -implicit:class -Xlint:-processing -AskipDefs='${ALLSYSTEMS_SKIPDEFS}'
