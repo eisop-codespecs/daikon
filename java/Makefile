@@ -972,13 +972,13 @@ show_nullness_java_files:
 # It is essential that "compile" completes before any typechecking commences.
 typecheck-part1: ${ALL_GENERATED_FILES} compile compile-typequals
 	$(MAKE) typecheck-part1-nocompile
-typecheck-part1-nocompile: typecheck-formatter-nocompile typecheck-index-nocompile typecheck-interning-nocompile typecheck-nullness
+typecheck-part1-nocompile: typecheck-formatter-nocompile typecheck-index-nocompile typecheck-interning-nocompile typecheck-nullness-nocompile
 typecheck-part2: ${ALL_GENERATED_FILES} compile
 	$(MAKE) typecheck-part2-nocompile
 typecheck-part2-nocompile: typecheck-lock-nocompile typecheck-regex-nocompile typecheck-resourceleak-nocompile typecheck-signature-nocompile typecheck-signedness-nocompile
-typecheck-all: ${ALL_GENERATED_FILES} compile
+typecheck-all: ${ALL_GENERATED_FILES} compile compile-typequals
 	$(MAKE) typecheck-all-nocompile
-typecheck-all-nocompile: typecheck-part1 typecheck-part2
+typecheck-all-nocompile: typecheck-part1-nocompile typecheck-part2-nocompile
 typecheck: typecheck-all
 
 typecheck-formatter: ${ALL_GENERATED_FILES} compile
