@@ -669,22 +669,24 @@ public class DeclWriter extends DaikonWriter implements ComparabilityProvider {
     // relates directly to the class ppt, otherwise to the object
     // ppt.  Note that a relation to the class ppt is returned only if there
     // are static variables.
-    for (ClassInfo ci : SharedData.all_classes) {
-      if (ci.class_name.equals(decl_type)) {
-        // System.out.printf("*Found match for %s : %s%n", decl_type, ci);
-        String ppt_marker = ":::OBJECT";
-        if (is_static_method && (var instanceof StaticObjInfo)) {
-          // System.out.printf("num_class_vars for classinfo %s%n", ci);
-          if (num_class_vars(ci) == 0) {
+    synchronized (SharedData.all_classes) {
+      for (ClassInfo ci : SharedData.all_classes) {
+        if (ci.class_name.equals(decl_type)) {
+          // System.out.printf("*Found match for %s : %s%n", decl_type, ci);
+          String ppt_marker = ":::OBJECT";
+          if (is_static_method && (var instanceof StaticObjInfo)) {
+            // System.out.printf("num_class_vars for classinfo %s%n", ci);
+            if (num_class_vars(ci) == 0) {
+              return null;
+            }
+            ppt_marker = ":::CLASS";
+          }
+          if (!enable_object_user && !var.getName().equals("this")) {
             return null;
           }
-          ppt_marker = ":::CLASS";
+          return new VarRelation(
+              decl_type + ppt_marker, "parent", var.getName(), "this", var.getName());
         }
-        if (!enable_object_user && !var.getName().equals("this")) {
-          return null;
-        }
-        return new VarRelation(
-            decl_type + ppt_marker, "parent", var.getName(), "this", var.getName());
       }
     }
 
